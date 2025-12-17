@@ -1,0 +1,39 @@
+<?php
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PageController;
+use Illuminate\Support\Facades\Route;
+
+// Static Pages
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/pricing', [PageController::class, 'pricing'])->name('pricing');
+Route::get('/help', [PageController::class, 'help'])->name('help');
+Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/docs', [PageController::class, 'docs'])->name('docs');
+
+// Auth
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/forgot-password', [AuthController::class, 'showForgot'])->name('password.request');
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+// App
+Route::middleware('auth')->group(function () {
+    Route::get('/prompt', [ChatController::class, 'index'])->name('chat.index');
+    Route::get('/prompt/{conversation}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/prompt/new', [ChatController::class, 'store'])->name('chat.store');
+    
+    // API-like route for chat streaming managed by controller to keep API key secure
+    Route::post('/chat/stream', [ChatController::class, 'stream'])->name('chat.stream');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
+});
