@@ -3,6 +3,7 @@
 Aplikasi Laravel modern yang dibangun untuk kolaborasi dan pengembangan tim.
 
 **Repository:** https://github.com/RacoonHQ/conq.git
+**Referensi:** https://ai.studio/apps/drive/1RpnxHq9-ULK5tsZSv0fRpy4X6C5up75t?fullscreenApplet=true
 
 ## Deskripsi Proyek
 
