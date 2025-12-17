@@ -1,81 +1,83 @@
 # Laravel Conq
 
-A modern Laravel application built for team collaboration and development.
+Aplikasi Laravel modern yang dibangun untuk kolaborasi dan pengembangan tim.
 
-## Project Description
+**Repository:** https://github.com/RacoonHQ/conq.git
 
-Laravel Conq is a web application framework built on top of Laravel 12, designed to provide a robust foundation for developing scalable and maintainable web applications. This project includes:
+## Deskripsi Proyek
 
-- **Modern Framework**: Built with Laravel 12 and PHP 8.2+
-- **AI Integration**: Includes AI service integration for intelligent features
-- **Conversation System**: Built-in conversation and chat functionality
-- **User Management**: Complete user authentication and authorization system
-- **Development Tools**: Pre-configured development environment with hot reload
-- **Testing Suite**: Comprehensive testing setup with PHPUnit
+Laravel Conq adalah aplikasi web framework yang dibangun di atas Laravel 12, dirancang untuk menyediakan fondasi yang kuat dalam mengembangkan aplikasi web yang skalabel dan mudah dipelihara. Proyek ini mencakup:
 
-### Key Features
+- **Framework Modern**: Dibangun dengan Laravel 12 dan PHP 8.2+
+- **Integrasi AI**: Termasuk layanan AI untuk fitur-fitur cerdas
+- **Sistem Percakapan**: Sistem percakapan dan chat yang terintegrasi
+- **Manajemen Pengguna**: Sistem autentikasi dan otorisasi pengguna yang lengkap
+- **Alat Pengembangan**: Lingkungan pengembangan yang sudah dikonfigurasi dengan hot reload
+- **Suite Pengujian**: Pengaturan pengujian komprehensif dengan PHPUnit
 
-- RESTful API design
-- Database migrations and seeding
-- Queue system for background processing
-- Real-time logging and monitoring
-- Frontend asset compilation with Vite
-- Code formatting with Laravel Pint
+### Fitur Utama
 
-## Setup Instructions
+- Desain API RESTful
+- Migrasi dan seeding database
+- Sistem antrian untuk pemrosesan background
+- Logging dan monitoring real-time
+- Kompilasi aset frontend dengan Vite
+- Pemformatan kode dengan Laravel Pint
 
-### Prerequisites
+## Petunjuk Instalasi
 
-- PHP 8.2 or higher
+### Prasyarat
+
+- PHP 8.2 atau lebih tinggi
 - Composer
-- Node.js and npm
-- Database (MySQL, PostgreSQL, or SQLite)
+- Node.js dan npm
+- Database (MySQL, PostgreSQL, atau SQLite)
 
-### Quick Setup
+### Instalasi Cepat
 
-1. **Clone the repository**
+1. **Clone repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/RacoonHQ/conq.git
    cd laravel-conq
    ```
 
-2. **Run the automated setup script**
+2. **Jalankan skrip instalasi otomatis**
    ```bash
    composer run setup
    ```
    
-   This script will:
-   - Install PHP dependencies
-   - Copy environment file
-   - Generate application key
-   - Run database migrations
-   - Install and build frontend assets
+   Skrip ini akan:
+   - Menginstal dependensi PHP
+   - Menyalin file environment
+   - Menghasilkan application key
+   - Menjalankan migrasi database
+   - Menginstal dan membangun aset frontend
 
-3. **Configure environment**
+3. **Konfigurasi environment**
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
    
-   Update your `.env` file with:
-   - Database credentials
-   - Mail configuration
-   - Other service credentials
+   Perbarui file `.env` Anda dengan:
+   - Kredensial database
+   - Konfigurasi email
+   - Kredensial layanan lainnya
 
-4. **Start development server**
+4. **Mulai server pengembangan**
    ```bash
    composer run dev
    ```
    
-   This will start:
-   - Laravel development server (http://localhost:8000)
-   - Queue worker
-   - Log monitoring
-   - Vite asset compilation
+   Ini akan menjalankan:
+   - Server pengembangan Laravel (http://localhost:8000)
+   - Worker antrian
+   - Monitoring log
+   - Kompilasi aset Vite
 
-### Manual Setup
+### Instalasi Manual
 
-If you prefer manual setup:
+Jika Anda lebih suka instalasi manual:
 
 ```bash
 # Install dependencies
@@ -97,115 +99,115 @@ npm run build
 php artisan serve
 ```
 
-## Git Contribution Guidelines
+## Panduan Kontribusi Git
 
-### Branch Naming Convention
+### Konvensi Penamaan Branch
 
-- `feature/feature-name` - New features
-- `bugfix/bug-description` - Bug fixes
-- `hotfix/critical-fix` - Critical production fixes
-- `refactor/code-improvement` - Code refactoring
-- `docs/documentation-update` - Documentation updates
+- `feature/nama-fitur` - Fitur baru
+- `bugfix/deskripsi-bug` - Perbaikan bug
+- `hotfix/perbaikan-kritis` - Perbaikan kritis produksi
+- `refactor/perbaikan-kode` - Refactoring kode
+- `docs/update-dokumentasi` - Pembaruan dokumentasi
 
-### Commit Message Format
+### Format Pesan Commit
 
-Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+Ikuti spesifikasi [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
-<type>[optional scope]: <description>
+<tipe>[opsional scope]: <deskripsi>
 
-[optional body]
+[opsional body]
 
-[optional footer(s)]
+[opsional footer(s)]
 ```
 
-Types:
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation
-- `style`: Code style changes
-- `refactor`: Code refactoring
-- `test`: Adding or updating tests
-- `chore`: Maintenance tasks
+Tipe:
+- `feat`: Fitur baru
+- `fix`: Perbaikan bug
+- `docs`: Dokumentasi
+- `style`: Perubahan gaya kode
+- `refactor`: Refactoring kode
+- `test`: Menambah atau memperbarui tes
+- `chore`: Tugas pemeliharaan
 
-Examples:
+Contoh:
 ```
-feat(auth): add two-factor authentication
-fix(api): resolve user profile endpoint error
-docs(readme): update setup instructions
+feat(auth): tambahkan autentikasi dua faktor
+fix(api): perbaiki error endpoint profil pengguna
+docs(readme): perbarui petunjuk instalasi
 ```
 
-### Pull Request Process
+### Proses Pull Request
 
-1. **Create a feature branch** from `main`
-2. **Make your changes** following coding standards
-3. **Run tests** to ensure everything works
-4. **Commit your changes** with proper commit messages
-5. **Push to your fork** and create a Pull Request
-6. **Wait for code review** and address feedback
+1. **Buat branch fitur** dari `main`
+2. **Lakukan perubahan** mengikuti standar coding
+3. **Jalankan tes** untuk memastikan semua berfungsi
+4. **Commit perubahan** dengan pesan commit yang benar
+5. **Push ke fork** Anda dan buat Pull Request
+6. **Tunggu code review** dan tanggapi feedback
 
-### Code Quality Standards
+### Standar Kualitas Kode
 
-- Follow [PSR-12](https://www.php-fig.org/psr/psr-12/) coding standards
-- Run `composer run test` before submitting
-- Use `vendor/bin/pint` for code formatting
-- Write tests for new features
-- Keep methods small and focused
+- Ikuti standar coding [PSR-12](https://www.php-fig.org/psr/psr-12/)
+- Jalankan `composer run test` sebelum submit
+- Gunakan `vendor/bin/pint` untuk pemformatan kode
+- Tulis tes untuk fitur baru
+- Pertahankan metode kecil dan fokus
 
-## Development Workflow
+## Alur Kerja Pengembangan
 
-### Daily Development
+### Pengembangan Harian
 
-1. **Start development environment**
+1. **Mulai lingkungan pengembangan**
    ```bash
    composer run dev
    ```
 
-2. **Make changes** to your code
-3. **Run tests** frequently
+2. **Lakukan perubahan** pada kode Anda
+3. **Jalankan tes** secara berkala
    ```bash
    composer run test
    ```
 
-4. **Format code**
+4. **Format kode**
    ```bash
    vendor/bin/pint
    ```
 
-### Available Scripts
+### Skrip yang Tersedia
 
-- `composer run setup` - Full project setup
-- `composer run dev` - Start development environment
-- `composer run test` - Run test suite
-- `npm run dev` - Start asset compilation
-- `npm run build` - Build production assets
+- `composer run setup` - Instalasi proyek lengkap
+- `composer run dev` - Mulai lingkungan pengembangan
+- `composer run test` - Jalankan suite tes
+- `npm run dev` - Mulai kompilasi aset
+- `npm run build` - Bangun aset produksi
 
-### Database Management
+### Manajemen Database
 
 ```bash
-# Create new migration
-php artisan make:migration create_table_name
+# Buat migrasi baru
+php artisan make:migration create_nama_tabel
 
-# Run migrations
+# Jalankan migrasi
 php artisan migrate
 
-# Rollback migration
+# Rollback migrasi
 php artisan migrate:rollback
 
-# Fresh migration with seeding
+# Migrasi fresh dengan seeding
 php artisan migrate:fresh --seed
 ```
 
-### Testing
+### Pengujian
 
 ```bash
-# Run all tests
+# Jalankan semua tes
 php artisan test
 
-# Run specific test
-php artisan test --filter TestName
+# Jalankan tes spesifik
+php artisan test --filter NamaTes
 
-# Generate test coverage
+# Hasilkan coverage tes
 php artisan test --coverage
 ```
 
