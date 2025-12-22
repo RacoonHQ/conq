@@ -1,8 +1,10 @@
 # Laravel Conq
 
 Aplikasi Laravel modern yang dibangun untuk kolaborasi dan pengembangan tim.
-
-**Repository:** https://github.com/RacoonHQ/conq.git
+### Repository 
+https://github.com/RacoonHQ/conq.git
+### Referensi Acuan
+https://ai.studio/apps/drive/1RpnxHq9-ULK5tsZSv0fRpy4X6C5up75t?fullscreenApplet=true
 
 ## Deskripsi Proyek
 
@@ -211,13 +213,13 @@ php artisan test --filter NamaTes
 php artisan test --coverage
 ```
 
-## Cara untuk Tim Kontribusi
+## Cara untuk Team Contribute
 
 ### Untuk Tim Developer
 
 #### 1. Persiapan Awal
 
-- **Instal alat yang dibutuhkan**:
+- **Install tools yang dibutuhkan**:
   - PHP 8.2+
   - Composer
   - Node.js
@@ -226,135 +228,135 @@ php artisan test --coverage
 
 - **Setup repository**:
   ```bash
-  git clone https://github.com/RacoonHQ/conq.git
+  git clone <repository-url>
   cd laravel-conq
   composer run setup
   ```
 
-#### 2. Alur Kerja Pengembangan
+#### 2. Alur Kerja Development
 
-1. **Ambil tugas dari manajemen proyek** (Jira, Trello, dll)
+1. **Ambil task dari project management** (Jira, Trello, dll)
 2. **Buat branch baru**:
    ```bash
-   git checkout -b feature/nama-fitur
+   git checkout -b feature/nama-feature
    ```
-3. **Kembangkan sesuai kebutuhan**
-4. **Uji secara lokal**:
+3. **Develop sesuai requirement**
+4. **Test secara lokal**:
    ```bash
    composer run test
    ```
 5. **Commit dengan format yang benar**:
    ```bash
    git add .
-   git commit -m "feat(modul): tambahkan fitur baru"
+   git commit -m "feat(module): tambahkan fitur baru"
    ```
 6. **Push dan buat Pull Request**
 
-#### 3. Proses Code Review
+#### 3. Code Review Process
 
-- **Setiap PR harus di-review** oleh minimal 1 anggota tim
+- **Setiap PR harus di-review** oleh minimal 1 team member
 - **Checklist review**:
-  - Kode mengikuti standar PSR-12
-  - Tes disertakan dan berhasil
-  - Dokumentasi diperbarui
-  - Tidak ada nilai yang di-hardcode
-  - Pertimbangan keamanan ditangani
+  - Code follows PSR-12 standards
+  - Tests are included and passing
+  - Documentation is updated
+  - No hardcoded values
+  - Security considerations addressed
 
 #### 4. Deployment
 
-- **Development**: Auto-deploy ke server development setiap merge ke `develop`
-- **Staging**: Deploy manual ke staging setelah persetujuan
-- **Production**: Deploy manual ke production dengan jadwal
+- **Development**: Auto-deploy ke development server setiap merge ke `develop`
+- **Staging**: Manual deploy ke staging setelah approval
+- **Production**: Manual deploy ke production dengan schedule
 
 ### Untuk Tim QA
 
-#### 1. Proses Pengujian
+#### 1. Testing Process
 
-- **Unit Testing**: Tanggung jawab Developer
-- **Integration Testing**: Verifikasi tim QA
-- **User Acceptance Testing**: Validasi pengguna bisnis
+- **Unit Testing**: Developer responsibility
+- **Integration Testing**: QA team verification
+- **User Acceptance Testing**: Business user validation
 
-#### 2. Pelaporan Bug
+#### 2. Bug Reporting
 
-Gunakan format berikut untuk laporan bug:
+Gunakan format berikut untuk bug report:
 
 ```
-**Judul**: [Tipe Bug] - Deskripsi Singkat
-**Lingkungan**: Development/Staging/Production
+**Title**: [Bug Type] - Brief Description
+**Environment**: Development/Staging/Production
 **Browser**: Chrome/Firefox/Safari
-**Langkah-langkah Reproduksi**:
-1. Langkah 1
-2. Langkah 2
-3. Langkah 3
-**Hasil yang Diharapkan**: Seharusnya terjadi apa
-**Hasil Aktual**: Yang sebenarnya terjadi
-**Screenshot**: [Lampirkan jika ada]
+**Steps to Reproduce**:
+1. Step 1
+2. Step 2
+3. Step 3
+**Expected Result**: What should happen
+**Actual Result**: What actually happened
+**Screenshots**: [Attach if applicable]
 ```
 
 ### Untuk Tim Product/Designer
 
-#### 1. Integrasi Desain
+#### 1. Design Integration
 
-- **File desain** disimpan di folder bersama (Figma, Adobe XD)
-- **Pustaka komponen** menggunakan Blade components
-- **Framework CSS**: Tailwind CSS
+- **Design files** disimpan di shared folder (Figma, Adobe XD)
+- **Component library** menggunakan Blade components
+- **CSS framework**: Tailwind CSS
 
-#### 2. Manajemen Konten
+#### 2. Content Management
 
-- **Konten statis**: Edit di file bahasa (`resources/lang`)
-- **Konten dinamis**: Kelola melalui panel admin
-- **Gambar**: Upload melalui media manager
+- **Static content**: Edit di language files (`resources/lang`)
+- **Dynamic content**: Manage melalui admin panel
+- **Images**: Upload melalui media manager
 
-### Pedoman Komunikasi
+### Communication Guidelines
 
 #### 1. Daily Standup
 
-- **Waktu**: Setiap hari pukul 09:00
-- **Format**: Kemarin apa yang dikerjakan, Hari ini apa, Ada kendala apa
-- **Durasi**: Maksimal 15 menit
+- **Time**: Setiap hari pukul 09:00
+- **Format**: What did yesterday, What today, Any blockers
+- **Duration**: Max 15 menit
 
 #### 2. Sprint Planning
 
-- **Frekuensi**: Setiap 2 minggu
-- **Peserta**: Seluruh tim pengembangan
-- **Output**: Sprint backlog dengan breakdown tugas
+- **Frequency**: Setiap 2 minggu
+- **Participants**: Seluruh development team
+- **Output**: Sprint backlog dengan task breakdown
 
 #### 3. Retrospective
 
-- **Frekuensi**: Akhir setiap sprint
-- **Fokus**: Peningkatan proses
-- **Action items**: Didokumentasikan dan dilacak
+- **Frequency**: Akhir setiap sprint
+- **Focus**: Process improvement
+- **Action items**: Documented dan tracked
 
-### Praktik Terbaik
+### Best Practices
 
-#### 1. Kualitas Kode
+#### 1. Code Quality
 
-- **Ikuti PSR-12** standar coding
-- **Tulis tes** untuk semua fitur baru
-- **Gunakan type hints** untuk parameter dan return values
-- **Pertahankan metode kecil** dan fokus
+- **Follow PSR-12** coding standards
+- **Write tests** untuk semua fitur baru
+- **Use type hints** untuk parameter dan return values
+- **Keep methods small** dan focused
 
-#### 2. Keamanan
+#### 2. Security
 
-- **Validasi semua input** data
-- **Gunakan prepared statements** untuk query database
-- **Implementasikan autentikasi** dan otorisasi yang tepat
-- **Pertahankan dependensi terbaru**
+- **Validate all input** data
+- **Use prepared statements** untuk database queries
+- **Implement proper authentication** dan authorization
+- **Keep dependencies updated**
 
-#### 3. Performa
+#### 3. Performance
 
-- **Gunakan caching** untuk data yang sering diakses
-- **Optimalkan query database**
-- **Implementasikan lazy loading** untuk relationships
-- **Monitor performa aplikasi**
+- **Use caching** untuk data yang sering diakses
+- **Optimize database queries**
+- **Implement lazy loading** untuk relationships
+- **Monitor application performance**
 
-## Dukungan
+## Support
 
-Untuk pertanyaan atau dukungan:
-- Buat issue di repository
-- Hubungi tim pengembangan
-- Lihat dokumentasi Laravel di [https://laravel.com/docs](https://laravel.com/docs)
+For questions or support:
+- Create an issue in the repository
+- Contact the development team
+- Check the Laravel documentation at [https://laravel.com/docs](https://laravel.com/docs)
 
-## Lisensi
+## License
 
-Proyek ini adalah perangkat lunak open-source berlisensi di bawah [lisensi MIT](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
