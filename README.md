@@ -1,17 +1,9 @@
 # Laravel Conq
 
-<<<<<<< HEAD
 Aplikasi kolaborasi tim modern yang dibangun dengan Laravel 12.
 
 [![Contributors](https://img.shields.io/github/contributors/RacoonHQ/conq?style=flat-square)](https://github.com/RacoonHQ/conq/graphs/contributors)
 [![License](https://img.shields.io/github/license/RacoonHQ/conq?style=flat-square)](LICENSE)
-=======
-Aplikasi Laravel modern yang dibangun untuk kolaborasi dan pengembangan tim.
-### Repository 
-https://github.com/RacoonHQ/conq.git
-### Referensi Acuan
-https://ai.studio/apps/drive/1RpnxHq9-ULK5tsZSv0fRpy4X6C5up75t?fullscreenApplet=true
->>>>>>> 149bf1bfb869222b1653812a978e4ee0199fb217
 
 ## 🚀 Fitur Utama
 
