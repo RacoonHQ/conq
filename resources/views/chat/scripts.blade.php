@@ -9,6 +9,8 @@
             isThinking: false,
             showLoginModal: false,
 
+            isUserLoggedIn: {{ Auth::check() ? 'true' : 'false' }},
+
             init() {
                 this.scrollToBottom();
                 if (this.input && this.messages.length === 0) {
@@ -19,52 +21,71 @@
                 this.$nextTick(() => {
                     this.renderMathAndCode();
                 });
-            },
 
-            // Updated to handle math and code highlighting after render
-            renderMathAndCode() {
-                this.$nextTick(() => {
-                    // Render Math
-                    renderMathInElement(document.body, {
-                        delimiters: [
-                            {left: '$$', right: '$$', display: true},
-                            {left: '$', right: '$', display: false},
-                            {left: '\\(', right: '\\)', display: false},
-                            {left: '\\[', right: '\\]', display: true}
-                        ],
-                        throwOnError: false
-                    });
-                    
-                    // Render Code Highlighting
-                    document.querySelectorAll('pre code').forEach((block) => {
-                        hljs.highlightElement(block);
-                    });
+                // Listen for input area submission
+                window.addEventListener('chat-submit', (e) => {
+                    this.sendMessage(e.detail.message);
                 });
-            },
 
-            parseMarkdown(text) {
-                // Configure marked to use highlight.js
-                // Note: basic marked usage returns HTML string. 
-                // We depend on the renderMathAndCode() called in x-effect or after update to apply styling.
-                return marked.parse(text);
+                // Listen for stop generation request
+                window.addEventListener('chat-stop', () => {
+                   // Implement stop logic if AbortController was available
+                   // For now, we can just set isThinking to false to reset UI
+                   this.isThinking = false;
+                   window.toast('Generation stopped', 'info');
+                });
             },
 
             scrollToBottom() {
                 this.$nextTick(() => {
                     const container = document.getElementById('messages-container');
-                    if (container) container.scrollTop = container.scrollHeight;
+                    if (container) {
+                        container.scrollTop = container.scrollHeight;
+                    }
                 });
             },
 
-            async sendMessage() {
-                if (!this.input.trim() || this.isThinking) return;
+            renderMathAndCode() {
+                this.$nextTick(() => {
+                    const container = document.getElementById('messages-container');
+                    if (!container) return;
+                    
+                    if (window.hljs) {
+                        container.querySelectorAll('pre code').forEach(block => window.hljs.highlightElement(block));
+                    }
+                    if (window.renderMathInElement) {
+                        window.renderMathInElement(container, {
+                            delimiters: [
+                                {left: '$$', right: '$$', display: true},
+                                {left: '$', right: '$', display: false},
+                                {left: '\\(', right: '\\)', display: false},
+                                {left: '\\[', right: '\\]', display: true}
+                            ],
+                            throwOnError: false
+                        });
+                    }
+                });
+            },
 
-                const userMsg = { id: Date.now(), role: 'user', content: this.input };
+            async sendMessage(customContent = null) {
+                const textToSend = customContent || this.input;
+
+                if (!textToSend.trim() || this.isThinking) return;
+
+                // Check Guest Limit (Max 3 prompts)
+                const userMsgCount = this.messages.filter(m => m.role === 'user').length;
+                if (!this.isUserLoggedIn && userMsgCount >= 3) {
+                    this.showLoginModal = true;
+                    return;
+                }
+
+                const userMsg = { id: Date.now(), role: 'user', content: textToSend };
                 this.messages.push(userMsg);
                 
-                const prompt = this.input;
-                this.input = '';
+                const prompt = textToSend; 
+                this.input = ''; // Clear parent input state just in case
                 this.isThinking = true;
+                window.dispatchEvent(new CustomEvent('ai-thinking-start'));
                 this.scrollToBottom();
                 this.renderMathAndCode();
 
@@ -73,8 +94,14 @@
                 this.messages.push({ id: aiMsgId, role: 'model', content: '' });
 
                 try {
-                    // Create Conversation on server if new
-                    if (!this.chatId) {
+                    // Create Conversation on server ONLY if user is logged in
+                    if (!this.chatId && this.isUserLoggedIn) {
+                        console.log('Creating new conversation...', {
+                            message: prompt,
+                            agent_id: this.agentId,
+                            messages: this.messages
+                        });
+                        
                         const createRes = await fetch("{{ route('chat.store') }}", {
                             method: 'POST',
                             headers: {
@@ -88,11 +115,25 @@
                             })
                         });
                         
+                        console.log('Create response status:', createRes.status);
+                        
                         if(createRes.ok) {
                             const createData = await createRes.json();
+                            console.log('Conversation created:', createData);
                             this.chatId = createData.id;
-                            window.history.replaceState({}, '', `/prompt/${this.chatId}`);
+                            // Redirect to the conversation page to refresh sidebar
+                            window.location.href = `/prompt/${this.chatId}`;
+                            return; // Stop execution since we're redirecting
+                        } else {
+                            const errorText = await createRes.text();
+                            console.error('Failed to create conversation:', createRes.status, errorText);
+                            window.toast('Failed to save conversation', 'error');
                         }
+                    } else {
+                        console.log('Skipping conversation creation:', {
+                            chatId: this.chatId,
+                            isUserLoggedIn: this.isUserLoggedIn
+                        });
                     }
 
                     // Start stream
@@ -154,6 +195,7 @@
                     window.toast('Error generating response', 'error');
                 } finally {
                     this.isThinking = false;
+                    window.dispatchEvent(new CustomEvent('ai-thinking-end'));
                 }
             }
         }

@@ -20,20 +20,21 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/forgot-password', [AuthController::class, 'showForgot'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-// App
+// App - Authenticated
 Route::middleware('auth')->group(function () {
-    Route::get('/prompt', [ChatController::class, 'index'])->name('chat.index');
     Route::get('/prompt/{conversation}', [ChatController::class, 'show'])->name('chat.show');
     Route::post('/prompt/new', [ChatController::class, 'store'])->name('chat.store');
-    
-    // API-like route for chat streaming managed by controller to keep API key secure
-    Route::post('/chat/stream', [ChatController::class, 'stream'])->name('chat.stream');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
 });
+
+// App - Public/Guest Accessible
+Route::get('/prompt', [ChatController::class, 'index'])->name('chat.index');
+Route::post('/chat/stream', [ChatController::class, 'stream'])->name('chat.stream');

@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class ChatController extends Controller
 {
     const AGENTS = [
-        'thinking_ai' => ['name' => 'Thinking AI', 'model' => 'llama-3.1-8b-instant', 'role' => 'system', 'instruction' => 'You are Thinking AI, a creative partner for brainstorming.'],
-        'code_ai' => ['name' => 'Code AI', 'model' => 'llama-3.3-70b-versatile', 'role' => 'system', 'instruction' => 'You are Code AI. Provide clean, efficient code. Wrap code in markdown blocks.'],
-        'reasoning_ai' => ['name' => 'Reasoning AI', 'model' => 'llama-3.3-70b-versatile', 'role' => 'system', 'instruction' => 'You are Reasoning AI. Approach problems step-by-step.'],
-        'math_ai' => ['name' => 'Math AI', 'model' => 'llama-3.3-70b-versatile', 'role' => 'system', 'instruction' => 'You are Math AI. Use LaTeX for equations.'],
+        'thinking_ai' => ['name' => 'Thinking AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Thinking AI, a creative partner for brainstorming.'],
+        'code_ai' => ['name' => 'Code AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Code AI. Provide clean, efficient code. Wrap code in markdown blocks.'],
+        'reasoning_ai' => ['name' => 'Reasoning AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Reasoning AI. Approach problems step-by-step.'],
+        'math_ai' => ['name' => 'Math AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Math AI. Use LaTeX for equations.'],
     ];
 
     protected GroqService $groqService;
@@ -26,11 +26,11 @@ class ChatController extends Controller
     public function index(Request $request)
     {
         $mode = $request->query('mode', 'user');
-        $initialPrompt = $request->session()->get('initial_prompt');
+        $initialPrompt = $request->query('prompt') ?: $request->session()->get('initial_prompt');
         
         return view('chat.index', [
             'mode' => $mode,
-            'conversations' => Auth::user()->conversations,
+            'conversations' => Auth::check() ? Auth::user()->conversations : [],
             'currentConversation' => null,
             'initialPrompt' => $initialPrompt,
             'initialAgent' => $request->query('agent', 'thinking_ai'),

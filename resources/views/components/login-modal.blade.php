@@ -30,16 +30,18 @@
                 <svg class="w-8 h-8 text-[#00D4FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
             </div>
 
-            <h3 class="text-2xl font-bold text-white mb-2">Login Required</h3>
+            <h3 class="text-2xl font-bold text-white mb-2">Guest Limit Reached</h3>
             <p class="text-[#A0A0A0] mb-8 text-sm leading-relaxed max-w-xs">
-                You need to sign in to access advanced features, save your history, and upload files.
+                You've reached the free usage limit for guests. Sign up to continue chatting and save your history.
             </p>
 
             <div class="grid grid-cols-1 w-full gap-3">
                 <a href="{{ route('register') }}" class="w-full py-3 rounded-xl font-semibold text-black flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform bg-[#00D4FF]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
                     Create Free Account
                 </a>
                 <a href="{{ route('login') }}" class="w-full py-3 rounded-xl font-semibold text-white bg-[#252525] border border-[#333] hover:bg-[#333] flex items-center justify-center gap-2 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
                     Sign In
                 </a>
             </div>
