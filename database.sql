@@ -68,10 +68,4 @@ Jika Anda ingin langsung mencoba dengan data awal tanpa register manual.
 INSERT INTO users (name, email, password, plan, credits) 
 VALUES 
 ('Demo User', 'demo@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Free', 100);
-
--- Insert Dummy Conversation untuk user tersebut
--- Pastikan ID user sesuai (biasanya 1 jika database baru)
-INSERT INTO conversations (id, user_id, title, agent_id)
-VALUES 
-('chat_123456789', 1, 'Belajar MySQL Dasar', 'thinking_ai');
 ```
