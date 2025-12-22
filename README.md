@@ -3,7 +3,7 @@
 Aplikasi kolaborasi tim modern yang dibangun dengan Laravel 12.
 
 [![Contributors](https://img.shields.io/github/contributors/RacoonHQ/conq?style=flat-square)](https://github.com/RacoonHQ/conq/graphs/contributors)
-[![License](https://img.shields.io/github/license/RacoonHQ/conq?style=flat-square)](LICENSE.md)
+[![License](https://img.shields.io/github/license/RacoonHQ/conq?style=flat-square)](LICENSE)
 
 ## 🚀 Fitur Utama
 
