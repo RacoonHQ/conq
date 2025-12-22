@@ -5,7 +5,13 @@ Aplikasi kolaborasi tim modern yang dibangun dengan Laravel 12.
 [![Contributors](https://img.shields.io/github/contributors/RacoonHQ/conq?style=flat-square)](https://github.com/RacoonHQ/conq/graphs/contributors)
 [![License](https://img.shields.io/github/license/RacoonHQ/conq?style=flat-square)](LICENSE)
 
+
+## 🔗 Referensi Proyek
+
+- [Project Reference](https://ai.studio/apps/drive/1RpnxHq9-ULK5tsZSv0fRpy4X6C5up75t?fullscreenApplet=true)
+
 ## 🚀 Fitur Utama
+
 
 - **Framework Modern**: Laravel 12 & PHP 8.2+.
 - **Kolaborasi Real-time**: Sistem chat dan notifikasi terintegrasi.
