@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="flex h-screen bg-[#121212] overflow-hidden" 
-     x-data="chatApp({{ json_encode($currentConversation ? json_decode($currentConversation->messages) : []) }}, '{{ $currentConversation ? $currentConversation->id : '' }}')">
+     x-data="chatApp({{ json_encode($currentConversation ? $currentConversation->messages : []) }}, '{{ $currentConversation ? $currentConversation->id : '' }}')">
     
     <!-- Sidebar -->
     <x-sidebar :conversations="$conversations" :user="Auth::user()" />

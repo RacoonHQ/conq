@@ -54,6 +54,11 @@ class ChatController extends Controller
 
     public function store(Request $request)
     {
+        // Check if user is authenticated
+        if (!Auth::check()) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
         // Used to save chat context after first message
         $convo = Conversation::create([
             'user_id' => Auth::id(),

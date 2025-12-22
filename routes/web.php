@@ -29,6 +29,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::middleware('auth')->group(function () {
     Route::get('/prompt/{conversation}', [ChatController::class, 'show'])->name('chat.show');
     Route::post('/prompt/new', [ChatController::class, 'store'])->name('chat.store');
+    Route::put('/prompt/{conversation}', [ChatController::class, 'update'])->name('chat.update');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');

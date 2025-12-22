@@ -121,9 +121,7 @@
                             const createData = await createRes.json();
                             console.log('Conversation created:', createData);
                             this.chatId = createData.id;
-                            // Redirect to the conversation page to refresh sidebar
-                            window.location.href = `/prompt/${this.chatId}`;
-                            return; // Stop execution since we're redirecting
+                            // Continue with streaming instead of redirecting
                         } else {
                             const errorText = await createRes.text();
                             console.error('Failed to create conversation:', createRes.status, errorText);
@@ -186,6 +184,11 @@
                     // Final render pass for the complete message
                     this.renderMathAndCode();
 
+                    // Save conversation with AI response if user is logged in and has a chatId
+                    if (this.chatId && this.isUserLoggedIn && aiContent) {
+                        this.updateConversation();
+                    }
+
                 } catch (error) {
                     console.error('Error:', error);
                     const msgIndex = this.messages.findIndex(m => m.id === aiMsgId);
@@ -196,6 +199,31 @@
                 } finally {
                     this.isThinking = false;
                     window.dispatchEvent(new CustomEvent('ai-thinking-end'));
+                }
+            },
+
+            async updateConversation() {
+                if (!this.chatId) return;
+                
+                try {
+                    const response = await fetch(`{{ route('chat.update', ':id') }}`.replace(':id', this.chatId), {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            messages: this.messages
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        console.log('Conversation updated successfully');
+                    } else {
+                        console.error('Failed to update conversation');
+                    }
+                } catch (error) {
+                    console.error('Error updating conversation:', error);
                 }
             }
         }
