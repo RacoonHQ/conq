@@ -172,16 +172,9 @@
                     if (response.status === 402) {
                         const errorData = await response.json();
                         if (errorData.redirect) {
-                            // Show credit exhaustion alert and redirect
-                            if (confirm('Insufficient credits! You will be redirected to the pricing page to purchase more credits.')) {
-                                window.location.href = errorData.redirect;
-                            } else {
-                                // Remove the user message if they cancel
-                                this.messages.pop();
-                                this.isThinking = false;
-                                window.dispatchEvent(new CustomEvent('ai-thinking-end'));
-                                return;
-                            }
+                            // Store redirect URL and show custom credits modal
+                            window.creditsRedirectUrl = errorData.redirect;
+                            showCreditsModal();
                         }
                         return;
                     }
@@ -435,6 +428,39 @@
         } catch (error) {
             console.error('Error deleting conversation:', error);
             window.toast('Error deleting conversation: ' + error.message, 'error');
+        }
+    }
+
+    // Credits Modal Functions
+    function showCreditsModal() {
+        const modal = document.getElementById('creditsModal');
+        modal.style.display = 'flex';
+        modal.classList.remove('hidden');
+        
+        // Add Alpine.js data binding
+        modal._x_dataStack = [modal._x_dataStack[0], { show: true }];
+    }
+
+    function closeCreditsModal() {
+        const modal = document.getElementById('creditsModal');
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+        
+        // Reset Alpine.js data binding
+        modal._x_dataStack = [modal._x_dataStack[0], { show: false }];
+        
+        // Remove the user message and reset thinking state
+        const chatApp = document.querySelector('[x-data="chatApp"]').__x.$data;
+        if (chatApp) {
+            chatApp.messages.pop();
+            chatApp.isThinking = false;
+            window.dispatchEvent(new CustomEvent('ai-thinking-end'));
+        }
+    }
+
+    function confirmCreditsRedirect() {
+        if (window.creditsRedirectUrl) {
+            window.location.href = window.creditsRedirectUrl;
         }
     }
 </script>

@@ -2,7 +2,7 @@
 
 <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-[#0F0F0F] border-r border-[#222] transform transition-transform duration-300 md:relative md:translate-x-0 flex flex-col font-['Inter']"
        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-       x-data="sidebarComponent({{ json_encode($conversations->map(function($c) { return ['id' => $c->id, 'title' => $c->title]; })->toArray()) }}, '{{ request()->route('conversation')?->id }}')"
+       x-data="sidebarComponent({{ json_encode(collect($conversations)->map(function($c) { return ['id' => $c->id, 'title' => $c->title]; })->toArray()) }}, '{{ request()->route('conversation')?->id }}')"
        x-cloak>
     
     <!-- Header -->

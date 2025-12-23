@@ -165,6 +165,31 @@
             </div>
         </div>
     </div>
+    
+    <!-- Custom Insufficient Credits Modal -->
+    <div id="creditsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" x-data="{ show: false }" x-show="show" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <div class="bg-[#1A1A1A] border border-[#333] rounded-xl p-6 max-w-md mx-4 shadow-2xl" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90">
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-white">Insufficient Credits</h3>
+            </div>
+            
+            <p class="text-[#888] mb-6">You will be redirected to the pricing page to purchase more credits.</p>
+            
+            <div class="flex justify-end gap-3">
+                <button onclick="closeCreditsModal()" class="px-4 py-2 bg-[#2A2A2A] hover:bg-[#333] text-[#888] hover:text-white rounded-lg transition-colors">
+                    Cancel
+                </button>
+                <button onclick="confirmCreditsRedirect()" class="px-4 py-2 bg-[#00D4FF] hover:bg-[#00B8E6] text-white rounded-lg transition-colors">
+                    Purchase Credits
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @include('chat.scripts')
