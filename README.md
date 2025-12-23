@@ -12,7 +12,7 @@ Aplikasi kolaborasi tim modern yang dibangun dengan Laravel 12.
 
 ## Dokumentasi Proyek
 
-[Dokumentasi Proyek](/Dokumentasi Progress Project/DOKUMENTASI.md)
+[Dokumentasi Proyek](/Dokumentasi/DOKUMENTASI.md)
 
 ## Fitur Utama
 
