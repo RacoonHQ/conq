@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Dokumentasi Proyek ConQ
 
 ## Daftar Isi
