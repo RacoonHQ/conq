@@ -38,7 +38,7 @@
                 <div class="flex items-start justify-between mb-4">
                     <div>
                         <div class="text-[#A0A0A0] text-xs uppercase tracking-wider mb-1">Credits</div>
-                        <div class="text-3xl font-bold text-white">{{ $user->credits }}</div>
+                        <div class="text-3xl font-bold text-white" x-data="{ credits: {{ $remainingCredits }} }" x-text="credits"></div>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,9 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="bg-[#1A1A1A] rounded-2xl border border-[#333] p-6">
-                <h3 class="text-lg font-semibold mb-6 flex items-center">Recent Conversations</h3>
+                <h3 class="text-lg font-semibold mb-6 flex items-center justify-between">Recent Conversations
+                    <button onclick="showDeleteConfirm()" class="text-red-500 hover:text-red-700 text-sm">Delete All</button>
+                </h3>
                 <div class="space-y-4">
                     @forelse($history->take(5) as $item)
                         <div class="flex items-center justify-between p-3 rounded-lg hover:bg-[#252525] transition-colors cursor-pointer border border-transparent hover:border-[#333]">
@@ -72,4 +74,77 @@
         </div>
     </div>
 </div>
+
+<!-- Custom Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-[#1A1A1A] rounded-2xl border border-[#333] p-6 max-w-sm mx-4">
+        <h3 class="text-lg font-semibold text-white mb-4">Delete All Conversations</h3>
+        <p class="text-[#A0A0A0] mb-6">Are you sure you want to delete all conversations? This action cannot be undone.</p>
+        <div class="flex justify-end space-x-3">
+            <button onclick="hideDeleteConfirm()" class="px-4 py-2 text-[#A0A0A0] hover:text-white transition-colors">Cancel</button>
+            <form id="deleteForm" action="{{ route('conversations.destroyAll') }}" method="POST" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">Delete All</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function showDeleteConfirm() {
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+function hideDeleteConfirm() {
+    document.getElementById('deleteModal').classList.add('hidden');
+}
+
+// Close modal when clicking outside
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        hideDeleteConfirm();
+    }
+});
+</script>
+
+<script>
+// Listen for credit updates from chat
+window.addEventListener('credits-updated', (e) => {
+    const creditElements = document.querySelectorAll('[x-data*="credits"]');
+    creditElements.forEach(element => {
+        const alpineData = element.__x || element._x_dataStack?.[0];
+        if (alpineData && alpineData.credits !== undefined) {
+            alpineData.credits = Math.max(0, alpineData.credits - e.detail.creditsUsed);
+        }
+    });
+});
+
+// Listen for conversation updates
+window.addEventListener('conversation-updated', () => {
+    // Refresh dashboard stats without page reload
+    fetch('{{ route('dashboard') }}', {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.text())
+    .then(html => {
+        // Parse the HTML and update stats
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Update total queries
+        const totalQueriesElement = doc.querySelector('.text-3xl');
+        if (totalQueriesElement) {
+            const currentTotalQueries = document.querySelector('.text-3xl');
+            if (currentTotalQueries) {
+                currentTotalQueries.textContent = totalQueriesElement.textContent;
+            }
+        }
+    })
+    .catch(error => console.error('Failed to update dashboard:', error));
+});
+</script>
 @endsection

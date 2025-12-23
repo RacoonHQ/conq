@@ -13,7 +13,7 @@ Aplikasi kolaborasi tim modern yang dibangun dengan Laravel 12.
 ## 🚀 Fitur Utama
 
 
-- **Framework Modern**: Laravel 12 & PHP 8.2+.
+- **Framework Modern**: Laravel 12 & PHP 8.2+..
 - **Kolaborasi Real-time**: Sistem chat dan notifikasi terintegrasi.
 - **Manajemen User**: Autentikasi lengkap dengan role & permission.
 - **Developer Experience**: Hot reload (Vite), Pint formatting, dan settingan Docker ready.

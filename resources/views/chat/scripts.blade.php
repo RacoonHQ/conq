@@ -34,6 +34,16 @@
                    this.isThinking = false;
                    window.toast('Generation stopped', 'info');
                 });
+                
+                // Listen for conversation loading from sidebar
+                window.addEventListener('load-conversation', (e) => {
+                    this.loadConversation(e.detail.conversationId);
+                });
+                
+                // Listen for new chat creation from sidebar
+                window.addEventListener('create-new-chat', () => {
+                    this.createNewChat();
+                });
             },
 
             scrollToBottom() {
@@ -121,6 +131,17 @@
                             const createData = await createRes.json();
                             console.log('Conversation created:', createData);
                             this.chatId = createData.id;
+                            
+                            // Emit event for sidebar update with actual message as title
+                            window.dispatchEvent(new CustomEvent('conversation-created', {
+                                detail: { 
+                                    conversation: { 
+                                        id: createData.id, 
+                                        title: prompt.substring(0, 50) + (prompt.length > 50 ? '...' : '')
+                                    } 
+                                }
+                            }));
+                            
                             // Continue with streaming instead of redirecting
                         } else {
                             const errorText = await createRes.text();
@@ -147,6 +168,23 @@
                             history: this.messages.slice(0, -2)
                         })
                     });
+
+                    if (response.status === 402) {
+                        const errorData = await response.json();
+                        if (errorData.redirect) {
+                            // Show credit exhaustion alert and redirect
+                            if (confirm('Insufficient credits! You will be redirected to the pricing page to purchase more credits.')) {
+                                window.location.href = errorData.redirect;
+                            } else {
+                                // Remove the user message if they cancel
+                                this.messages.pop();
+                                this.isThinking = false;
+                                window.dispatchEvent(new CustomEvent('ai-thinking-end'));
+                                return;
+                            }
+                        }
+                        return;
+                    }
 
                     if (!response.ok) throw new Error('Network response was not ok');
 
@@ -187,7 +225,20 @@
                     // Save conversation with AI response if user is logged in and has a chatId
                     if (this.chatId && this.isUserLoggedIn && aiContent) {
                         this.updateConversation();
+                        
+                        // Update conversation title in sidebar with the first message
+                        window.dispatchEvent(new CustomEvent('conversation-title-updated', {
+                            detail: { 
+                                conversationId: this.chatId, 
+                                title: prompt.substring(0, 50) + (prompt.length > 50 ? '...' : '')
+                            }
+                        }));
                     }
+
+                    // Emit credit update event
+                    window.dispatchEvent(new CustomEvent('credits-updated', {
+                        detail: { creditsUsed: 5 }
+                    }));
 
                 } catch (error) {
                     console.error('Error:', error);
@@ -225,7 +276,165 @@
                 } catch (error) {
                     console.error('Error updating conversation:', error);
                 }
+            },
+            
+            async loadConversation(conversationId) {
+                try {
+                    // Don't show thinking animation for conversation loading
+                    // Just clear current state and load new conversation
+                    
+                    // Fetch conversation data from API
+                    const response = await fetch(`/api/conversations/${conversationId}`, {
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to load conversation');
+                    }
+                    
+                    const conversationData = await response.json();
+                    
+                    // Update chat state with loaded conversation
+                    this.chatId = conversationData.id;
+                    this.messages = conversationData.messages || [];
+                    this.agentId = conversationData.agent_id || 'thinking_ai';
+                    
+                    // Clear any pending input
+                    this.input = '';
+                    
+                    // Ensure thinking state is false
+                    this.isThinking = false;
+                    
+                    // Scroll to bottom
+                    this.scrollToBottom();
+                    
+                    // Render math and code
+                    this.renderMathAndCode();
+                    
+                } catch (error) {
+                    console.error('Error loading conversation:', error);
+                    this.isThinking = false;
+                    window.toast('Failed to load conversation', 'error');
+                    
+                    // Fallback to page refresh
+                    window.location.href = `/prompt/${conversationId}`;
+                }
+            },
+            
+            createNewChat() {
+                // Reset chat state for new chat
+                this.chatId = null;
+                this.messages = [];
+                this.agentId = 'thinking_ai';
+                this.input = '';
+                this.isThinking = false;
+                
+                // Scroll to top
+                this.scrollToBottom();
             }
+        }
+    }
+
+    // Global function for deleting conversations
+    let deleteConversationId = null;
+    let deleteConversationTitle = null;
+
+    async function deleteConversation(conversationId, conversationTitle) {
+        console.log('Attempting to delete conversation:', conversationId, conversationTitle);
+        console.log('Conversation ID type:', typeof conversationId);
+        console.log('Conversation ID length:', conversationId ? conversationId.length : 'null');
+        
+        // Store conversation details
+        deleteConversationId = conversationId;
+        deleteConversationTitle = conversationTitle;
+        
+        // Set the title in the modal
+        document.getElementById('deleteConversationTitle').textContent = conversationTitle;
+        
+        // Show the custom modal
+        const modal = document.getElementById('deleteModal');
+        modal.style.display = 'flex';
+        modal.classList.remove('hidden');
+        
+        // Add Alpine.js data binding
+        modal._x_dataStack = [modal._x_dataStack[0], { show: true }];
+    }
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+        
+        // Reset Alpine.js data binding
+        modal._x_dataStack = [modal._x_dataStack[0], { show: false }];
+        
+        // Clear stored data
+        deleteConversationId = null;
+        deleteConversationTitle = null;
+        
+        console.log('Delete modal closed');
+    }
+
+    async function confirmDelete() {
+        if (!deleteConversationId || !deleteConversationTitle) {
+            console.error('No conversation data stored for deletion');
+            return;
+        }
+
+        console.log('Proceeding with deletion of:', deleteConversationId, deleteConversationTitle);
+        
+        // Store the ID locally before closing modal
+        const conversationIdToDelete = deleteConversationId;
+        
+        // Close modal first
+        closeDeleteModal();
+
+        try {
+            const deleteUrl = `/prompt/${conversationIdToDelete}`;
+            console.log('Delete URL:', deleteUrl);
+            
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            console.log('CSRF Token:', csrfToken ? 'found' : 'not found');
+            
+            const response = await fetch(deleteUrl, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                }
+            });
+
+            console.log('Response status:', response.status);
+            console.log('Response ok:', response.ok);
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Response data:', data);
+                window.toast(data.message || 'Conversation deleted successfully', 'success');
+                
+                // Emit event for sidebar update
+                window.dispatchEvent(new CustomEvent('conversation-deleted', {
+                    detail: { conversationId: conversationIdToDelete }
+                }));
+                
+                // Redirect to chat index if we're currently viewing the deleted conversation
+                if (window.location.pathname.includes('/prompt/' + conversationIdToDelete)) {
+                    window.location.href = '/prompt';
+                } else {
+                    // Update sidebar without page reload
+                    window.dispatchEvent(new CustomEvent('conversation-updated'));
+                }
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to delete conversation:', response.status, errorText);
+                window.toast(`Failed to delete conversation: ${response.status}`, 'error');
+            }
+        } catch (error) {
+            console.error('Error deleting conversation:', error);
+            window.toast('Error deleting conversation: ' + error.message, 'error');
         }
     }
 </script>

@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
+    remember_token VARCHAR(100) DEFAULT NULL,
     plan ENUM('Free', 'Pro', 'Enterprise') DEFAULT 'Free',
     credits INT DEFAULT 100,
     avatar VARCHAR(255) DEFAULT NULL,

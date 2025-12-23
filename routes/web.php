@@ -31,6 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/prompt/{conversation}', [ChatController::class, 'show'])->name('chat.show');
     Route::post('/prompt/new', [ChatController::class, 'store'])->name('chat.store');
     Route::put('/prompt/{conversation}', [ChatController::class, 'update'])->name('chat.update');
+    Route::delete('/prompt/{conversation}', [ChatController::class, 'destroy'])->name('chat.destroy');
+    Route::delete('/conversations/destroy-all', [DashboardController::class, 'destroyAll'])->name('conversations.destroyAll');
+
+    // API Routes for real-time updates
+    Route::get('/api/conversations', [ChatController::class, 'apiIndex'])->name('api.conversations');
+    Route::get('/api/conversations/{conversation}', [ChatController::class, 'apiShow'])->name('api.conversation.show');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');

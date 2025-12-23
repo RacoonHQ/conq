@@ -81,6 +81,46 @@ class ChatController extends Controller
         return response()->json(['status' => 'success']);
     }
 
+    public function destroy(Request $request, $conversation)
+    {
+        \Log::info('Delete request received for conversation ID: ' . $conversation);
+        \Log::info('User ID: ' . Auth::id());
+        
+        $convo = Conversation::where('id', $conversation)->where('user_id', Auth::id())->first();
+        
+        \Log::info('Conversation found: ' . ($convo ? 'yes' : 'no'));
+        
+        if (!$convo) {
+            \Log::error('Conversation not found for ID: ' . $conversation . ' and user: ' . Auth::id());
+            return response()->json(['status' => 'error', 'message' => 'Conversation not found'], 404);
+        }
+
+        $convo->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Conversation deleted successfully']);
+    }
+
+    public function apiIndex()
+    {
+        $conversations = Auth::user()->conversations()->get(['id', 'title', 'created_at']);
+        return response()->json($conversations);
+    }
+
+    public function apiShow(Conversation $conversation)
+    {
+        if ($conversation->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        
+        return response()->json([
+            'id' => $conversation->id,
+            'title' => $conversation->title,
+            'agent_id' => $conversation->agent_id,
+            'messages' => $conversation->messages,
+            'created_at' => $conversation->created_at
+        ]);
+    }
+
     public function stream(Request $request)
     {
         $request->validate([
@@ -88,6 +128,17 @@ class ChatController extends Controller
             'history' => 'array',
             'agent_id' => 'required'
         ]);
+
+        // Check if user has enough credits (5 credits per prompt)
+        if (!Auth::check() || !Auth::user()->hasCredits(5)) {
+            return response()->json([
+                'error' => 'Insufficient credits',
+                'redirect' => route('pricing')
+            ], 402);
+        }
+
+        // Deduct 5 credits for this prompt
+        Auth::user()->useCredits(5);
 
         $agentConfig = self::AGENTS[$request->agent_id] ?? self::AGENTS['thinking_ai'];
         $messages = $this->groqService->prepareHistory($request->history, $request->message, $agentConfig);

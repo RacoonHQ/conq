@@ -16,6 +16,7 @@ class User extends Authenticatable
         'password',
         'plan',
         'credits',
+        'credits_used',
         'avatar',
     ];
 
@@ -35,5 +36,29 @@ class User extends Authenticatable
     public function conversations()
     {
         return $this->hasMany(Conversation::class)->orderBy('created_at', 'desc');
+    }
+
+    public function getRemainingCreditsAttribute()
+    {
+        // Check if credits_used column exists, if not use 0 as default
+        $creditsUsed = 0;
+        if (isset($this->attributes['credits_used'])) {
+            $creditsUsed = $this->credits_used;
+        }
+        return $this->credits - $creditsUsed;
+    }
+
+    public function useCredits($amount)
+    {
+        // Only update if credits_used column exists
+        if (isset($this->attributes['credits_used'])) {
+            $this->credits_used += $amount;
+            $this->save();
+        }
+    }
+
+    public function hasCredits($amount = 1)
+    {
+        return $this->getRemainingCreditsAttribute() >= $amount;
     }
 }
