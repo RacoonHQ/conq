@@ -6,11 +6,15 @@ Aplikasi kolaborasi tim modern yang dibangun dengan Laravel 12.
 [![License](https://img.shields.io/github/license/RacoonHQ/conq?style=flat-square)](LICENSE)
 
 
-## 🔗 Referensi Proyek
+## Referensi Proyek
 
-- [Project Reference](https://ai.studio/apps/drive/1RpnxHq9-ULK5tsZSv0fRpy4X6C5up75t?fullscreenApplet=true)
+[Project Reference](https://ai.studio/apps/drive/1RpnxHq9-ULK5tsZSv0fRpy4X6C5up75t?fullscreenApplet=true)
 
-## 🚀 Fitur Utama
+## Dokumentasi Proyek
+
+[Dokumentasi Proyek](/DOKUMENTASI.md)
+
+## Fitur Utama
 
 
 - **Framework Modern**: Laravel 12 & PHP 8.2+..
@@ -18,13 +22,13 @@ Aplikasi kolaborasi tim modern yang dibangun dengan Laravel 12.
 - **Manajemen User**: Autentikasi lengkap dengan role & permission.
 - **Developer Experience**: Hot reload (Vite), Pint formatting, dan settingan Docker ready.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Backend**: Laravel 12, MySQL/PostgreSQL
 - **Frontend**: Blade, JavaScript, Vite, Tailwind CSS
 - **Tools**: Redis (Queue/Cache), Docker
 
-## ⚡ Instalasi Cepat
+## Instalasi Cepat
 
 Pastikan Anda memiliki PHP 8.2+, Composer, dan Node.js.
 
@@ -41,7 +45,7 @@ Pastikan Anda memiliki PHP 8.2+, Composer, dan Node.js.
    ```
    Akses aplikasi di [http://localhost:8000](http://localhost:8000).
 
-## 🤝 Berkontribusi
+## Berkontribusi
 
 Ingin berkontribusi? Silakan baca panduan lengkap kami di [CONTRIBUTING.md](CONTRIBUTING.md).
 Di sana Anda akan menemukan info tentang:
