@@ -53,9 +53,3 @@ Di sana Anda akan menemukan info tentang:
 
 Proyek ini dilisensikan di bawah [MIT License](https://opensource.org/licenses/MIT).
 
----
-<p align="center">
-  <a href="https://github.com/RacoonHQ/conq">
-    <img src="https://contrib.rocks/image?repo=RacoonHQ/conq" alt="Contributors" />
-  </a>
-</p>
