@@ -88,10 +88,14 @@
                         class="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent group-hover:to-white transition-all duration-300">CONQ</span>
                     <span class="text-[#00D4FF] animate-pulse">.</span>
                 </a>
-                <span
-                    class="px-3 py-1 rounded-full bg-white/5 text-xs font-medium text-gray-400 border border-white/10 backdrop-blur-sm">
-                    Documentation v1.0
-                </span>
+                <a href="{{ route('home') }}"
+                    class="group flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    Back to Home
+                </a>
             </div>
         </header>
 
