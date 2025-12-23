@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 // Static Pages
@@ -39,3 +40,9 @@ Route::middleware('auth')->group(function () {
 // App - Public/Guest Accessible
 Route::get('/prompt', [ChatController::class, 'index'])->name('chat.index');
 Route::post('/chat/stream', [ChatController::class, 'stream'])->name('chat.stream');
+
+// Subscription Routes
+Route::get('/subscription/checkout', [SubscriptionController::class, 'showCheckout'])->name('subscription.checkout');
+Route::post('/subscription/process', [SubscriptionController::class, 'processPayment'])->name('subscription.process');
+Route::post('/subscription/contact-sales', [SubscriptionController::class, 'contactSales'])->name('subscription.contact');
+Route::get('/upgrade-to-pro', [SubscriptionController::class, 'upgradeToPro'])->name('subscription.upgrade');
