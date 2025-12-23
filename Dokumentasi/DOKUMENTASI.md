@@ -90,6 +90,4 @@ conq/
 
 ### Halaman Tentang
 ![About](127.0.0.1_8000_about.png)
-=======
 
->>>>>>> db9cb5a02e7c14055fca43380b1d8350b5a5c679
