@@ -35,13 +35,13 @@ Pastikan Anda memiliki PHP 8.2+, Composer, dan Node.js.
 1. **Clone & Setup**:
    ```bash
    git clone https://github.com/RacoonHQ/conq.git
-   cd laravel-conq
-   composer run setup
+   cd conq
+   composer install
    ```
 
 2. **Jalankan Server**:
    ```bash
-   composer run dev
+   php artisan serve
    ```
    Akses aplikasi di [http://localhost:8000](http://localhost:8000).
 
