@@ -26,7 +26,7 @@ Terima kasih atas minat Anda untuk berkontribusi pada proyek Laravel Conq! Dokum
    - PHP 8.2+
    - Composer
    - Node.js
-   - Database (MySQL/PostgreSQL/SQLite)
+   - Database (MySQL)
    - Git
 
 2. **Setup Proyek**:

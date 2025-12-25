@@ -39,14 +39,23 @@ Pastikan Anda memiliki PHP 8.2+, Composer, dan Node.js.
    composer install
    ```
 2. **Buat Database nya**:
-   '''bash
-
-3. **Create APP KEY nya**:
-   '''bash
-4. **Clear Chace & config**:
-   '''bash
-
-5. **Jalankan Server**:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   
+   # Buat database baru di MySQL
+   # Edit .env file untuk konfigurasi database
+   
+   # Opsi 1: Import SQL lengkap (Recommended)
+   # Import file database.sql melalui phpMyAdmin
+   ```
+3. **Clear Cache & config**:
+   ```bash
+   php artisan config:clear
+   php artisan cache:clear
+   php artisan config:cache
+   ```
+4. **Jalankan Server**:
    ```bash
    php artisan serve
    ```
