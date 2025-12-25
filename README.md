@@ -43,7 +43,7 @@ Pastikan Anda memiliki PHP 8.2+, Composer, dan Node.js.
    ```bash
    php artisan serve
    ```
-   Akses aplikasi di [http://localhost:8000](http://localhost:8000).
+   Akses aplikasi di [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ## Berkontribusi
 
