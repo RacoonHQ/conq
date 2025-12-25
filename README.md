@@ -38,8 +38,15 @@ Pastikan Anda memiliki PHP 8.2+, Composer, dan Node.js.
    cd conq
    composer install
    ```
+2. **Buat Database nya**:
+   '''bash
 
-2. **Jalankan Server**:
+3. **Create APP KEY nya**:
+   '''bash
+4. **Clear Chace & config**:
+   '''bash
+
+5. **Jalankan Server**:
    ```bash
    php artisan serve
    ```
