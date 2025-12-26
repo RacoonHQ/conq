@@ -197,6 +197,80 @@
             <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
         </div>
 
+        <!-- Mobile Bottom Navigation -->
+        <nav
+            class="lg:hidden fixed bottom-0 left-0 right-0 bg-[#1a1a1a]/95 backdrop-blur-md border-t border-gray-800 z-50 safe-area-inset-bottom">
+            <div class="flex items-center justify-around px-2 py-2">
+                <!-- Docs -->
+                <a href="{{ route('docs') }}"
+                    class="group flex flex-col items-center gap-1.5 py-2 px-3 min-w-[70px] relative transition-all duration-300 hover:scale-105 active:scale-95">
+                    <div class="relative">
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-[#00D4FF] transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,212,255,0.5)]"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <div
+                            class="absolute inset-0 bg-[#00D4FF] opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 rounded-full">
+                        </div>
+                    </div>
+                    <span
+                        class="text-xs text-gray-400 group-hover:text-white transition-all duration-300 font-medium">Docs</span>
+                </a>
+
+                <!-- Pricing -->
+                <a href="{{ route('pricing') }}"
+                    class="group flex flex-col items-center gap-1.5 py-2 px-3 min-w-[70px] relative transition-all duration-300 hover:scale-105 active:scale-95">
+                    <div class="relative">
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-[#00D4FF] transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,212,255,0.5)]"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div
+                            class="absolute inset-0 bg-[#00D4FF] opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 rounded-full">
+                        </div>
+                    </div>
+                    <span
+                        class="text-xs text-gray-400 group-hover:text-white transition-all duration-300 font-medium">Pricing</span>
+                </a>
+
+                <!-- Help -->
+                <a href="{{ route('help') }}"
+                    class="group flex flex-col items-center gap-1.5 py-2 px-3 min-w-[70px] relative transition-all duration-300 hover:scale-105 active:scale-95">
+                    <div class="relative">
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-[#00D4FF] transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,212,255,0.5)]"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div
+                            class="absolute inset-0 bg-[#00D4FF] opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 rounded-full">
+                        </div>
+                    </div>
+                    <span
+                        class="text-xs text-gray-400 group-hover:text-white transition-all duration-300 font-medium">Help</span>
+                </a>
+
+                <!-- About -->
+                <a href="{{ route('about') }}"
+                    class="group flex flex-col items-center gap-1.5 py-2 px-3 min-w-[70px] relative transition-all duration-300 hover:scale-105 active:scale-95">
+                    <div class="relative">
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-[#00D4FF] transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,212,255,0.5)]"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div
+                            class="absolute inset-0 bg-[#00D4FF] opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 rounded-full">
+                        </div>
+                    </div>
+                    <span
+                        class="text-xs text-gray-400 group-hover:text-white transition-all duration-300 font-medium">About</span>
+                </a>
+            </div>
+        </nav>
+
     </div>
 
     <script>
