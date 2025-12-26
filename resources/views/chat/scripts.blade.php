@@ -1,5 +1,5 @@
 <script>
-    function chatApp(initialMessages, initialChatId) {
+    function chatApp(initialMessages, initialChatId, agents, initialAgent) {
         return {
             sidebarOpen: false,
             input: '{{ $initialPrompt ?? "" }}',
@@ -8,6 +8,8 @@
             chatId: initialChatId || null,
             isThinking: false,
             showLoginModal: false,
+            agents: agents || {},
+            initialAgent: initialAgent || 'thinking_ai',
 
             isUserLoggedIn: {{ Auth::check() ? 'true' : 'false' }},
 
@@ -101,7 +103,7 @@
 
                 // Create AI Placeholder
                 const aiMsgId = Date.now() + 1;
-                this.messages.push({ id: aiMsgId, role: 'model', content: '' });
+                this.messages.push({ id: aiMsgId, role: 'model', content: '', agentId: this.agentId });
 
                 try {
                     // Create Conversation on server ONLY if user is logged in
@@ -326,6 +328,14 @@
                 
                 // Scroll to top
                 this.scrollToBottom();
+            },
+            
+            getAgentName(agentId) {
+                return this.agents[agentId]?.name || 'AI';
+            },
+            
+            getAgentModel(agentId) {
+                return this.agents[agentId]?.model || 'unknown';
             }
         }
     }

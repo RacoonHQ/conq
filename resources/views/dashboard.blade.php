@@ -39,6 +39,7 @@
                     <div>
                         <div class="text-[#A0A0A0] text-xs uppercase tracking-wider mb-1">Credits</div>
                         <div class="text-3xl font-bold text-white" x-data="{ credits: {{ $remainingCredits }} }" x-text="credits"></div>
+                        <div class="text-xs text-[#666] mt-1">5 credits per prompt (resets daily)</div>
                     </div>
                 </div>
             </div>

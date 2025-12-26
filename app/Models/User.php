@@ -40,25 +40,44 @@ class User extends Authenticatable
 
     public function getRemainingCreditsAttribute()
     {
-        // Check if credits_used column exists, if not use 0 as default
-        $creditsUsed = 0;
-        if (isset($this->attributes['credits_used'])) {
-            $creditsUsed = $this->credits_used;
-        }
-        return $this->credits - $creditsUsed;
+        $this->resetCreditsIfNeeded();
+        return $this->credits;
     }
 
-    public function useCredits($amount)
+    public function resetCreditsIfNeeded()
     {
-        // Only update if credits_used column exists
-        if (isset($this->attributes['credits_used'])) {
-            $this->credits_used += $amount;
+        $now = now();
+        
+        // Check if credits_last_reset_at column exists before using it
+        if (!isset($this->attributes['credits_last_reset_at'])) {
+            // Column doesn't exist, skip reset logic for now
+            return;
+        }
+        
+        // Check if credits need to be reset (24 hours have passed since last reset)
+        if (!$this->credits_last_reset_at || $now->diffInHours($this->credits_last_reset_at) >= 24) {
+            $this->credits = 100;
+            $this->credits_last_reset_at = $now;
             $this->save();
         }
     }
 
+    public function useCredits($amount)
+    {
+        $this->resetCreditsIfNeeded();
+        
+        if ($this->credits >= $amount) {
+            $this->credits -= $amount;
+            $this->save();
+            return true;
+        }
+        
+        return false;
+    }
+
     public function hasCredits($amount = 1)
     {
-        return $this->getRemainingCreditsAttribute() >= $amount;
+        $this->resetCreditsIfNeeded();
+        return $this->credits >= $amount;
     }
 }

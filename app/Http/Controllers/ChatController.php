@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class ChatController extends Controller
 {
     const AGENTS = [
-        'thinking_ai' => ['name' => 'Thinking AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Thinking AI, a creative partner for brainstorming.'],
-        'code_ai' => ['name' => 'Code AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Code AI. Provide clean, efficient code. Wrap code in markdown blocks.'],
-        'reasoning_ai' => ['name' => 'Reasoning AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Reasoning AI. Approach problems step-by-step.'],
+        'thinking_ai' => ['name' => 'Thinking AI', 'model' => 'qwen/qwen3-32b', 'role' => 'system', 'instruction' => 'You are Thinking AI, a creative partner for brainstorming.'],
+        'code_ai' => ['name' => 'Code AI', 'model' => 'moonshotai/kimi-k2-instruct-0905', 'role' => 'system', 'instruction' => 'You are Code AI. Provide clean, efficient code. Wrap code in markdown blocks.'],
+        'reasoning_ai' => ['name' => 'Reasoning AI', 'model' => 'meta-llama/llama-4-scout-17b-16e-instruct', 'role' => 'system', 'instruction' => 'You are Reasoning AI. Approach problems step-by-step.'],
         'math_ai' => ['name' => 'Math AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Math AI. Use LaTeX for equations.'],
     ];
 

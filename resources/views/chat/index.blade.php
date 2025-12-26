@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="flex h-screen bg-[#121212] overflow-hidden" 
-     x-data="chatApp({{ json_encode($currentConversation ? $currentConversation->messages : []) }}, '{{ $currentConversation ? $currentConversation->id : '' }}')">
+     x-data="chatApp({{ json_encode($currentConversation ? $currentConversation->messages : []) }}, '{{ $currentConversation ? $currentConversation->id : '' }}', {{ json_encode($agents) }}, '{{ $initialAgent }}')">
     
     <!-- Sidebar -->
     <x-sidebar :conversations="$conversations" :user="Auth::user()" />
@@ -90,8 +90,8 @@
                             <div class="flex-1 min-w-0">
                                 <!-- Agent Header -->
                                 <div class="flex items-center gap-2 mb-2">
-                                    <span class="font-bold text-white text-sm" x-text="msg.role === 'model' ? 'Thinking AI' : 'AI'"></span>
-                                    <span class="text-[10px] px-1.5 py-0.5 rounded border border-[#333] text-[#666] bg-[#1A1A1A]">openai/gpt oss</span>
+                                    <span class="font-bold text-white text-sm" x-text="getAgentName(msg.agentId || '{{ $initialAgent }}')"></span>
+                                    <span class="text-[10px] px-1.5 py-0.5 rounded border border-[#333] text-[#666] bg-[#1A1A1A]" x-text="getAgentModel(msg.agentId || '{{ $initialAgent }}')"></span>
                                 </div>
 
                                 <!-- Thinking Block -->

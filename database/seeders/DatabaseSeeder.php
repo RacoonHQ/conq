@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'demo@conq.ai',
             'password' => Hash::make('password'),
             'plan' => 'Pro',
-            'credits' => 1000,
+            'credits' => 100,
         ]);
     }
 }
