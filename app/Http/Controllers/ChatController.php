@@ -137,6 +137,14 @@ class ChatController extends Controller
             ], 402);
         }
 
+        // Check for file upload attempts from guests
+        if (!Auth::check() && str_contains($request->message, '[Attached File:')) {
+            return response()->json([
+                'error' => 'File upload is only available for registered users. Please sign up to upload files.',
+                'redirect' => route('register')
+            ], 403);
+        }
+
         // Deduct 5 credits for this prompt
         Auth::user()->useCredits(5);
 

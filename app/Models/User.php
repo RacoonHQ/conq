@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -79,5 +80,21 @@ class User extends Authenticatable
     {
         $this->resetCreditsIfNeeded();
         return $this->credits >= $amount;
+    }
+
+    /**
+     * Check if the current user is a guest (not authenticated)
+     */
+    public static function isGuest()
+    {
+        return !Auth::check();
+    }
+
+    /**
+     * Check if the current authenticated user can upload files
+     */
+    public static function canUploadFiles()
+    {
+        return Auth::check(); // Only authenticated users can upload files
     }
 }

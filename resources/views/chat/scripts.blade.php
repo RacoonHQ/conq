@@ -174,9 +174,14 @@
                     if (response.status === 402) {
                         const errorData = await response.json();
                         if (errorData.redirect) {
-                            // Store redirect URL and show custom credits modal
-                            window.creditsRedirectUrl = errorData.redirect;
-                            showCreditsModal();
+                            // Check if user is guest, show login modal instead of credits modal
+                            if (!this.isUserLoggedIn) {
+                                this.showLoginModal = true;
+                            } else {
+                                // Store redirect URL and show custom credits modal for logged-in users
+                                window.creditsRedirectUrl = errorData.redirect;
+                                showCreditsModal();
+                            }
                         }
                         return;
                     }
@@ -473,4 +478,12 @@
             window.location.href = window.creditsRedirectUrl;
         }
     }
+
+    // Global function to show login modal from any component
+    window.showLoginModal = function() {
+        const chatApp = document.querySelector('[x-data="chatApp"]');
+        if (chatApp && chatApp.__x && chatApp.__x.$data) {
+            chatApp.__x.$data.showLoginModal = true;
+        }
+    };
 </script>
