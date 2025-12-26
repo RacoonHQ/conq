@@ -57,7 +57,8 @@
         }
     </style>
 
-    <div class="min-h-screen bg-[#050505] text-white font-['Inter'] relative flex flex-col items-center py-12 px-4">
+    <div
+        class="min-h-screen bg-[#050505] text-white font-['Inter'] relative flex flex-col items-center justify-center md:py-12 px-4 overflow-hidden">
 
         <!-- Dynamic Background -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
@@ -74,7 +75,8 @@
         </div>
 
         <!-- Back Button -->
-        <div class="w-full max-w-md mb-4 animate-fade-in-up">
+        <div
+            class="w-full max-w-md mb-4 md:mb-4 animate-fade-in-up md:block absolute md:relative top-4 md:top-auto left-4 md:left-auto">
             <a href="{{ route('home') }}"
                 class="group inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors z-20">
                 <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
