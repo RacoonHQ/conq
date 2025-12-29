@@ -64,30 +64,42 @@ conq/
 
 ## Screenshot Aplikasi
 
-### Halaman Home
-![Home](127.0.0.1_8000_home.png)
+### Tampilan Desktop
 
-### Halaman Login
-![Login](127.0.0.1_8000_login.png)
+#### Halaman Home
+![Home](dekstop/home.png)
 
-### Halaman Register
-![Register](127.0.0.1_8000_register.png)
+#### Halaman Login
+![Login](dekstop/login.png)
 
-### Halaman Lupa Password
-![Forgot Password](127.0.0.1_8000_forgot-password.png)
+#### Halaman Register
+![Register](dekstop/register.png)
 
-### Halaman Prompt
-![Prompt](127.0.0.1_8000_prompt.png)
+#### Halaman Lupa Password
+![Forgot Password](dekstop/forgot-password.png)
 
-### Halaman Dokumentasi
-![Documentation](127.0.0.1_8000_docs.png)
+#### Halaman Prompt
+![Prompt](dekstop/prompt.png)
 
-### Halaman Harga
-![Pricing](127.0.0.1_8000_pricing.png)
+#### Halaman Dashboard
+![Dashboard](dekstop/dashboard.png)
 
-### Halaman Bantuan
-![Help](127.0.0.1_8000_help.png)
+#### Halaman Profile
+![Profile](dekstop/profile.png)
 
-### Halaman Tentang
-![About](127.0.0.1_8000_about.png)
+#### Halaman Dokumentasi
+![Documentation](dekstop/docs.png)
+
+#### Halaman Harga
+![Pricing](dekstop/pricing.png)
+
+#### Halaman Bantuan
+![Help](dekstop/help.png)
+
+#### Halaman Tentang
+![About](dekstop/about.png)
+
+### Tampilan Mobile
+
+*Coming soon - Screenshot mobile akan ditambahkan di sini*
 

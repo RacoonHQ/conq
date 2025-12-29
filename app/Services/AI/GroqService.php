@@ -11,7 +11,10 @@ class GroqService
 
     public function __construct()
     {
-        $this->apiKey = env('GROQ_API_KEY');
+        $this->apiKey = env('GROQ_API_KEY', 'default_key');
+        if (empty($this->apiKey)) {
+            throw new \Exception('GROQ_API_KEY not found in .env file');
+        }
     }
 
     public function streamMessage(string $model, array $messages, float $temperature = 0.7)
