@@ -6,6 +6,22 @@
     return ['id' => $c->id, 'title' => $c->title]; })->toArray()) }}, '{{ request()->route('conversation')?->id }}')"
     x-cloak>
 
+    <!-- Mobile Close Button - Center Right -->
+    <button @click="sidebarOpen = false" 
+        x-show="sidebarOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 scale-75"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-75"
+        class="md:hidden absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-2 text-[#444] hover:text-white transition-all duration-200 hover:scale-110 hover:bg-black/90 shadow-lg z-10"
+        title="Close sidebar">
+        <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+
     <!-- Header -->
     <div class="px-4 py-5 flex items-center justify-between">
         <h1 class="text-lg font-bold tracking-tight text-white cursor-pointer" @click="window.location.href='/'">
