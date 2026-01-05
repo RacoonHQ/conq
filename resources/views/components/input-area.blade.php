@@ -236,7 +236,11 @@
                     window.showLoginModal();
                     return;
                 }
-                if (e.target.files.length > 0) this.attachment = e.target.files[0];
+                if (e.target.files.length > 0) {
+                    this.attachment = e.target.files[0];
+                }
+                // Reset the file input to allow selecting the same file again
+                e.target.value = '';
             },
 
             toggleMic() {
@@ -263,15 +267,26 @@
                 if (!this.input.trim() && !this.attachment) return;
 
                 let message = this.input;
-                if (this.attachment) {
-                    message = `[Attached File: ${this.attachment.name}]\n\n` + message;
-                    this.attachment = null;
+                const hasAttachment = !!this.attachment;
+                const attachmentName = hasAttachment ? this.attachment.name : '';
+                
+                if (hasAttachment) {
+                    message = `[Attached File: ${attachmentName}]\n\n` + message;
                 }
 
                 window.dispatchEvent(new CustomEvent('chat-submit', {
-                    detail: { message: message }
+                    detail: { 
+                        message: message,
+                        attachment: hasAttachment ? this.attachment : null
+                    }
                 }));
+                
+                // Reset the form
                 this.input = '';
+                this.attachment = null;
+                if (this.$refs.fileInput) {
+                    this.$refs.fileInput.value = '';
+                }
             }
         }
     }
