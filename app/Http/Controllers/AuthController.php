@@ -35,6 +35,14 @@ class AuthController extends Controller // Definisikan AuthController yang exten
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) { // Coba autentikasi user
             $request->session()->regenerate(); // Regenerasi session ID untuk keamanan
+            
+            // Check if the user was redirected from payment page
+            if (session()->has('payment_redirect')) {
+                $redirectTo = session('payment_redirect');
+                session()->forget('payment_redirect'); // Clear the session value
+                return redirect()->intended($redirectTo);
+            }
+            
             return redirect()->intended(route('chat.index')); // Redirect ke halaman yang dimaksud atau chat index
         }
 

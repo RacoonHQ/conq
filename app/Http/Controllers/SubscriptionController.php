@@ -10,6 +10,8 @@ class SubscriptionController extends Controller // Definisikan SubscriptionContr
     public function showCheckout() // Metode untuk menampilkan halaman checkout
     {
         if (!Auth::check()) { // Periksa apakah user tidak terautentikasi
+            // Store the intended URL in the session
+            session(['payment_redirect' => route('subscription.checkout')]);
             return redirect()->route('login')->with('message', 'Silakan login untuk mengupgrade plan Anda.'); // Redirect ke login dengan pesan
         }
 
@@ -49,11 +51,13 @@ class SubscriptionController extends Controller // Definisikan SubscriptionContr
     }
 
     public function upgradeToPro() // Metode untuk menangani upgrade ke plan Pro
-    {
-        if (!Auth::check()) { // Periksa apakah user tidak terautentikasi
-            return redirect()->route('login')->with('message', 'Silakan login untuk mengupgrade plan Anda.'); // Redirect ke login dengan pesan
-        }
-
-        return redirect()->route('subscription.checkout'); // Redirect ke halaman checkout
+{
+    if (!Auth::check()) { // Periksa apakah user tidak terautentikasi
+        // Simpan URL tujuan di session
+        session(['payment_redirect' => route('subscription.checkout')]);
+        return redirect()->route('login')->with('message', 'Silakan login untuk mengupgrade plan Anda.');
     }
+
+    return redirect()->route('subscription.checkout'); // Arahkan ke halaman checkout
+}
 }
