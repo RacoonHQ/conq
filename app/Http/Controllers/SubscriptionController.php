@@ -1,59 +1,59 @@
-<?php
+<?php // Tag pembuka PHP
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers; // Definisikan namespace untuk HTTP controllers
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request; // Import kelas Request dari Laravel
+use Illuminate\Support\Facades\Auth; // Import facade Authentication dari Laravel
 
-class SubscriptionController extends Controller
+class SubscriptionController extends Controller // Definisikan SubscriptionController yang extends Controller dasar
 {
-    public function showCheckout()
+    public function showCheckout() // Metode untuk menampilkan halaman checkout
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('message', 'Please login to upgrade your plan.');
+        if (!Auth::check()) { // Periksa apakah user tidak terautentikasi
+            return redirect()->route('login')->with('message', 'Silakan login untuk mengupgrade plan Anda.'); // Redirect ke login dengan pesan
         }
 
-        return view('subscription.checkout');
+        return view('subscription.checkout'); // Return view halaman checkout
     }
 
-    public function processPayment(Request $request)
+    public function processPayment(Request $request) // Metode untuk memproses pembayaran
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
+        if (!Auth::check()) { // Periksa apakah user tidak terautentikasi
+            return redirect()->route('login'); // Redirect ke halaman login
         }
 
-        // Here you would integrate with a payment gateway like Stripe
-        // For now, we'll just simulate a successful payment
+        // Di sini Anda akan mengintegrasikan dengan payment gateway seperti Stripe
+        // Untuk sekarang, kita akan simulasikan pembayaran berhasil
         
-        $user = Auth::user();
+        $user = Auth::user(); // Dapatkan user yang sedang terautentikasi
         
-        // Update user's subscription status (you'd have a subscription table in real app)
-        // For demo purposes, we'll just redirect with success message
+        // Update status subscription user (Anda akan memiliki tabel subscription di aplikasi nyata)
+        // Untuk demo, kita akan redirect dengan pesan sukses
         
-        return redirect()->route('dashboard')->with('success', 'Successfully upgraded to Pro plan!');
+        return redirect()->route('dashboard')->with('success', 'Berhasil upgrade ke plan Pro!'); // Redirect ke dashboard dengan pesan sukses
     }
 
-    public function contactSales(Request $request)
+    public function contactSales(Request $request) // Metode untuk menangani form kontak sales
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'company' => 'nullable|string|max:255',
-            'message' => 'required|string|max:1000',
+        $request->validate([ // Validasi data request yang masuk
+            'name' => 'required|string|max:255', // Nama wajib, string, maksimal 255 karakter
+            'email' => 'required|email|max:255', // Email wajib, valid, maksimal 255 karakter
+            'company' => 'nullable|string|max:255', // Perusahaan opsional, string, maksimal 255 karakter
+            'message' => 'required|string|max:1000', // Pesan wajib, string, maksimal 1000 karakter
         ]);
 
-        // Here you would send an email to your sales team
-        // For now, we'll just redirect with success message
+        // Di sini Anda akan mengirim email ke tim sales Anda
+        // Untuk sekarang, kita akan redirect dengan pesan sukses
         
-        return redirect()->back()->with('success', 'Thank you for your interest! Our sales team will contact you soon.');
+        return redirect()->back()->with('success', 'Terima kasih atas minat Anda! Tim sales kami akan menghubungi Anda segera.'); // Return kembali dengan pesan sukses
     }
 
-    public function upgradeToPro()
+    public function upgradeToPro() // Metode untuk menangani upgrade ke plan Pro
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('message', 'Please login to upgrade your plan.');
+        if (!Auth::check()) { // Periksa apakah user tidak terautentikasi
+            return redirect()->route('login')->with('message', 'Silakan login untuk mengupgrade plan Anda.'); // Redirect ke login dengan pesan
         }
 
-        return redirect()->route('subscription.checkout');
+        return redirect()->route('subscription.checkout'); // Redirect ke halaman checkout
     }
 }
