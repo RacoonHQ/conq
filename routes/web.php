@@ -8,11 +8,11 @@ use App\Http\Controllers\SubscriptionController; // Import SubscriptionControlle
 use Illuminate\Support\Facades\Route; // Import Route facade untuk mendefinisikan route
 
 // Komentar bagian Halaman Statis
-Route::get('/', [PageController::class, 'home'])->name('home'); // Route untuk halaman beranda
-Route::get('/pricing', [PageController::class, 'pricing'])->name('pricing'); // Route untuk halaman harga
-Route::get('/help', [PageController::class, 'help'])->name('help'); // Route untuk halaman bantuan
-Route::get('/about', [PageController::class, 'about'])->name('about'); // Route untuk halaman tentang
-Route::get('/docs', [PageController::class, 'docs'])->name('docs'); // Route untuk halaman dokumentasi
+Route::get('/', [PageController::class, 'home'])->name('home'); // Route untuk halaman home
+Route::get('/pricing', [PageController::class, 'pricing'])->name('pricing'); // Route untuk halaman pricing
+Route::get('/help', [PageController::class, 'help'])->name('help'); // Route untuk halaman help
+Route::get('/about', [PageController::class, 'about'])->name('about'); // Route untuk halaman about
+Route::get('/docs', [PageController::class, 'docs'])->name('docs'); // Route untuk halaman docs
 
 // Komentar bagian Autentikasi
 Route::middleware('guest')->group(function () { // Kelompokkan route yang memerlukan akses tamu (belum terautentikasi)
