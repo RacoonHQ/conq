@@ -54,3 +54,4 @@ Route::get('/subscription/checkout', [SubscriptionController::class, 'showChecko
 Route::post('/subscription/process', [SubscriptionController::class, 'processPayment'])->name('subscription.process'); // POST route untuk memproses pembayaran berlangganan
 Route::post('/subscription/contact-sales', [SubscriptionController::class, 'contactSales'])->name('subscription.contact'); // POST route untuk menghubungi sales
 Route::get('/upgrade-to-pro', [SubscriptionController::class, 'upgradeToPro'])->name('subscription.upgrade'); // GET route untuk halaman upgrade ke pro
+Route::get('/subscription/manage', [SubscriptionController::class, 'manage'])->name('subscription.manage'); // GET route untuk halaman manage subscription

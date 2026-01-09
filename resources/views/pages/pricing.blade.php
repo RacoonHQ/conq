@@ -171,10 +171,17 @@
                         @endforeach
                     </ul>
 
-                    <a href="{{ route('subscription.upgrade') }}"
-                        class="w-full py-4 rounded-xl font-bold text-sm bg-[#00D4FF] text-black hover:bg-[#00c2ea] hover:shadow-[0_0_20px_rgba(0,212,255,0.4)] transition-all duration-200 text-center block active:scale-95 transform mt-auto">
-                        Upgrade to Pro
-                    </a>
+                    @if(Auth::check() && Auth::user()->plan === 'Pro')
+                        <a href="{{ route('subscription.manage') }}"
+                            class="w-full py-4 rounded-xl font-bold text-sm bg-[#00D4FF] text-black hover:bg-[#00c2ea] hover:shadow-[0_0_20px_rgba(0,212,255,0.4)] transition-all duration-200 text-center block active:scale-95 transform mt-auto">
+                            Manage Subscription
+                        </a>
+                    @else
+                        <a href="{{ route('subscription.upgrade') }}"
+                            class="w-full py-4 rounded-xl font-bold text-sm bg-[#00D4FF] text-black hover:bg-[#00c2ea] hover:shadow-[0_0_20px_rgba(0,212,255,0.4)] transition-all duration-200 text-center block active:scale-95 transform mt-auto">
+                            Upgrade to Pro
+                        </a>
+                    @endif
                 </div>
 
                 <!-- Enterprise Plan -->

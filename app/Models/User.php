@@ -19,6 +19,7 @@ class User extends Authenticatable
         'credits',
         'credits_used',
         'avatar',
+        'subscription_expires_at',
     ];
 
     protected $hidden = [
@@ -31,6 +32,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'subscription_expires_at' => 'datetime',
         ];
     }
 
@@ -67,6 +69,11 @@ class User extends Authenticatable
     {
         $this->resetCreditsIfNeeded();
         
+        // Periksa apakah user memiliki plan 'Pro', jika ya, tidak perlu mengurangi kredit
+        if ($this->plan === 'Pro') {
+            return true;
+        }
+
         if ($this->credits >= $amount) {
             $this->credits -= $amount;
             $this->save();
@@ -79,6 +86,12 @@ class User extends Authenticatable
     public function hasCredits($amount = 1)
     {
         $this->resetCreditsIfNeeded();
+        
+        // User dengan plan 'Pro' selalu memiliki kredit
+        if ($this->plan === 'Pro') {
+            return true;
+        }
+
         return $this->credits >= $amount;
     }
 

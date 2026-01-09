@@ -19,7 +19,7 @@ class GroqService // Kelas utama untuk menangani koneksi ke API Groq
     public function __construct()
     {
         // Mengambil API key dari environment variable
-        $this->apiKey = env('GROQ_API_KEY');
+        $this->apiKey = env('GROQ_API_KEY', '');
         
         // Validasi API key
         if (empty($this->apiKey) || $this->apiKey === 'your_groq_api_key_here') {

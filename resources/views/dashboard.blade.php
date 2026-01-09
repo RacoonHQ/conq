@@ -170,8 +170,10 @@
                         <div class="flex-1">
                             <div class="text-gray-400 text-xs uppercase tracking-wider mb-2 font-semibold">Credits</div>
                             <div class="text-4xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors"
-                                x-data="{ credits: {{ $remainingCredits }} }" x-text="credits"></div>
+                                x-data="{ credits: '{{ $user->plan === 'Pro' ? 'Unlimited' : $remainingCredits }}' }" x-text="credits"></div>
+                            @if($user->plan !== 'Pro')
                             <div class="text-xs text-gray-500 mt-1">5 credits per prompt (resets daily)</div>
+                            @endif
                         </div>
                         <div
                             class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
@@ -228,32 +230,43 @@
                     </div>
                 </div>
 
-                <!-- Upgrade Card -->
+                <!-- Upgrade/Status Card -->
                 <div class="space-y-6 animate-fade-in-up stagger-5">
-                    <div
-                        class="glass-card rounded-2xl p-8 relative overflow-hidden group hover:shadow-[0_0_40px_rgba(0,212,255,0.3)] transition-all duration-300">
+                    <div class="glass-card rounded-2xl p-8 relative overflow-hidden group hover:shadow-[0_0_40px_rgba(0,212,255,0.3)] transition-all duration-300">
                         <!-- Gradient Overlay -->
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-[#00D4FF]/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#00D4FF]/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                         <div class="relative z-10">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div
-                                    class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00D4FF] to-blue-500 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                    </svg>
+                            @if ($user->plan === 'Pro')
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00D4FF] to-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                                        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white">Pro Plan Active</h3>
                                 </div>
-                                <h3 class="text-xl font-bold">Upgrade to Pro</h3>
-                            </div>
-                            <p class="text-sm text-gray-400 mb-6 leading-relaxed">Unlock higher rate limits, priority
-                                support, and exclusive features.</p>
-                            <a href="{{ route('pricing') }}"
-                                class="inline-block py-3 px-8 rounded-xl font-bold text-black bg-gradient-to-r from-[#00D4FF] to-blue-500 hover:shadow-[0_0_30px_rgba(0,212,255,0.4)] transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm uppercase tracking-wide">
-                                View Plans
-                            </a>
+                                <p class="text-sm text-gray-400 mb-6 leading-relaxed">
+                                    Your subscription is valid until <span class="text-white font-semibold">{{ $user->subscription_expires_at ? $user->subscription_expires_at->format('d F Y') : 'N/A' }}</span>.
+                                </p>
+                                <a href="{{ route('subscription.manage') }}" class="w-full sm:w-auto inline-block py-3 px-8 rounded-xl font-bold text-black bg-gradient-to-r from-[#00D4FF] to-blue-500 hover:shadow-[0_0_30px_rgba(0,212,255,0.4)] transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm uppercase tracking-wide">
+                                    Manage Subscription
+                                </a>
+
+                            @else
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00D4FF] to-blue-500 flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold">Upgrade to Pro</h3>
+                                </div>
+                                <p class="text-sm text-gray-400 mb-6 leading-relaxed">Unlock higher rate limits, priority support, and exclusive features.</p>
+                                <a href="{{ route('pricing') }}" class="inline-block py-3 px-8 rounded-xl font-bold text-black bg-gradient-to-r from-[#00D4FF] to-blue-500 hover:shadow-[0_0_30px_rgba(0,212,255,0.4)] transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm uppercase tracking-wide">
+                                    View Plans
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>

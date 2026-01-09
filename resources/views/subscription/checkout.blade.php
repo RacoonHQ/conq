@@ -1,19 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-[#0A0A0A] text-white font-['Inter'] relative overflow-hidden">
-    <header class="relative z-10 px-6 py-6 max-w-7xl mx-auto flex items-center justify-between">
-        <a href="{{ route('home') }}" class="text-xl font-bold tracking-tight">CONQ<span class="text-[#00D4FF]">.</span></a>
-        <a href="{{ route('pricing') }}" class="text-sm text-gray-400 hover:text-white flex items-center gap-2">← Back to Pricing</a>
-    </header>
+    <style>
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
 
-    <main class="relative z-10 px-6 pt-10 pb-20 max-w-4xl mx-auto">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Upgrade to <span class="text-[#00D4FF]">Pro</span></h1>
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto">Get unlimited access to all AI models and priority support.</p>
+    <div class="min-h-screen bg-[#050505] text-white font-['Inter'] relative overflow-hidden flex flex-col items-center">
+        <!-- Dynamic Background -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-[#00D4FF] rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-blob"></div>
+            <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-1/3 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-blob animation-delay-4000"></div>
+            <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
         </div>
 
-        <div class="bg-[#121212] border border-[#333] rounded-2xl p-8">
+        <header class="relative z-10 w-full px-6 py-6 max-w-7xl mx-auto flex items-center justify-between">
+            <a href="{{ route('home') }}" class="text-xl font-bold tracking-tight hover:opacity-80 transition-opacity">CONQ<span class="text-[#00D4FF]">.</span></a>
+            <a href="{{ route('pricing') }}" class="group flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                Back to Pricing
+            </a>
+        </header>
+
+        <main class="relative z-10 px-6 pt-10 pb-20 max-w-4xl mx-auto w-full flex-grow">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Upgrade to <span class="text-[#00D4FF]">Pro</span></h1>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">Get unlimited access to all AI models and priority support.</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-8">
             <div class="mb-8">
                 <h2 class="text-2xl font-semibold mb-4">Pro Plan Summary</h2>
                 <div class="flex items-baseline mb-4">
@@ -21,36 +51,14 @@
                     <span class="text-gray-500 ml-2">/month</span>
                 </div>
                 <ul class="space-y-3">
+                    @foreach($features as $feature)
                     <li class="flex items-center gap-3">
                         <svg class="w-5 h-5 text-[#00D4FF]" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        <span class="text-gray-300">Everything in Starter</span>
+                        <span class="text-gray-300">{{ $feature }}</span>
                     </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-[#00D4FF]" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-300">Unlimited queries</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-[#00D4FF]" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-300">Access to Reasoning AI & Math AI</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-[#00D4FF]" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-300">Priority response speed</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-[#00D4FF]" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-300">Early access to new features</span>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
 
@@ -71,8 +79,12 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-2">Expiry Date</label>
-                            <input type="text" placeholder="MM/YY" 
-                                   class="w-full px-4 py-3 bg-[#1A1A1A] border border-[#333] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#00D4FF]">
+                            <div class="flex gap-4">
+                                <input type="text" placeholder="MM" maxlength="2"
+                                    class="w-full px-4 py-3 bg-[#1A1A1A] border border-[#333] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#00D4FF] text-center">
+                                <input type="text" placeholder="YYYY" maxlength="4"
+                                    class="w-full px-4 py-3 bg-[#1A1A1A] border border-[#333] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#00D4FF] text-center">
+                            </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-2">CVV</label>

@@ -5,59 +5,89 @@ namespace App\Http\Controllers; // Definisikan namespace untuk HTTP controllers
 use Illuminate\Http\Request; // Import kelas Request dari Laravel
 use Illuminate\Support\Facades\Auth; // Import facade Authentication dari Laravel
 
-class SubscriptionController extends Controller // Definisikan SubscriptionController yang extends Controller dasar
+class SubscriptionController extends Controller
 {
-    public function showCheckout() // Metode untuk menampilkan halaman checkout
+    public function showCheckout()
     {
-        if (!Auth::check()) { // Periksa apakah user tidak terautentikasi
+        if (!Auth::check()) {
             // Store the intended URL in the session
             session(['payment_redirect' => route('subscription.checkout')]);
-            return redirect()->route('login')->with('message', 'Silakan login untuk mengupgrade plan Anda.'); // Redirect ke login dengan pesan
+            return redirect()->route('login')->with('message', 'Silakan login untuk mengupgrade plan Anda.');
         }
 
-        return view('subscription.checkout'); // Return view halaman checkout
+        $features = [
+            'Everything in Starter',
+            'Unlimited queries',
+            'Access to Reasoning AI',
+            'Access to Math AI',
+            'Priority response speed',
+            'Early access to new features'
+        ];
+
+        return view('subscription.checkout', compact('features'));
     }
 
-    public function processPayment(Request $request) // Metode untuk memproses pembayaran
+    public function processPayment(Request $request)
     {
-        if (!Auth::check()) { // Periksa apakah user tidak terautentikasi
-            return redirect()->route('login'); // Redirect ke halaman login
+        if (!Auth::check()) {
+            return redirect()->route('login');
         }
 
-        // Di sini Anda akan mengintegrasikan dengan payment gateway seperti Stripe
-        // Untuk sekarang, kita akan simulasikan pembayaran berhasil
+        // Simulasi pembayaran berhasil (Manual tanpa integrasi payment gateway)
         
-        $user = Auth::user(); // Dapatkan user yang sedang terautentikasi
+        $user = Auth::user();
         
-        // Update status subscription user (Anda akan memiliki tabel subscription di aplikasi nyata)
-        // Untuk demo, kita akan redirect dengan pesan sukses
+        // Update plan user ke Pro
+        $message = 'Selamat! Akun Anda telah diupgrade ke plan Pro.';
         
-        return redirect()->route('dashboard')->with('success', 'Berhasil upgrade ke plan Pro!'); // Redirect ke dashboard dengan pesan sukses
+        if ($user->plan === 'Pro') {
+            // User sudah Pro, perpanjang dari tanggal expire saat ini
+            $currentExpiry = $user->subscription_expires_at ?? now();
+            $user->subscription_expires_at = $currentExpiry->addMonth();
+            $user->save();
+            $message = 'Berhasil! Langganan Pro Anda telah diperpanjang selama 1 bulan.';
+        } else {
+            // User baru upgrade ke Pro
+            $user->plan = 'Pro';
+            $user->subscription_expires_at = now()->addMonth();
+            $user->save();
+        }
+        
+        return redirect()->route('dashboard')->with('success', $message);
     }
 
-    public function contactSales(Request $request) // Metode untuk menangani form kontak sales
+    public function contactSales(Request $request)
     {
-        $request->validate([ // Validasi data request yang masuk
-            'name' => 'required|string|max:255', // Nama wajib, string, maksimal 255 karakter
-            'email' => 'required|email|max:255', // Email wajib, valid, maksimal 255 karakter
-            'company' => 'nullable|string|max:255', // Perusahaan opsional, string, maksimal 255 karakter
-            'message' => 'required|string|max:1000', // Pesan wajib, string, maksimal 1000 karakter
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'company' => 'nullable|string|max:255',
+            'message' => 'required|string|max:1000',
         ]);
 
         // Di sini Anda akan mengirim email ke tim sales Anda
         // Untuk sekarang, kita akan redirect dengan pesan sukses
         
-        return redirect()->back()->with('success', 'Terima kasih atas minat Anda! Tim sales kami akan menghubungi Anda segera.'); // Return kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Terima kasih atas minat Anda! Tim sales kami akan menghubungi Anda segera.');
     }
 
-    public function upgradeToPro() // Metode untuk menangani upgrade ke plan Pro
-{
-    if (!Auth::check()) { // Periksa apakah user tidak terautentikasi
-        // Simpan URL tujuan di session
-        session(['payment_redirect' => route('subscription.checkout')]);
-        return redirect()->route('login')->with('message', 'Silakan login untuk mengupgrade plan Anda.');
+    public function upgradeToPro()
+    {
+        if (!Auth::check()) {
+            session(['payment_redirect' => route('subscription.checkout')]);
+            return redirect()->route('login')->with('message', 'Silakan login untuk mengupgrade plan Anda.');
+        }
+
+        return redirect()->route('subscription.checkout');
     }
 
-    return redirect()->route('subscription.checkout'); // Arahkan ke halaman checkout
-}
+    public function manage()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $user = Auth::user();
+        return view('subscription.managesubs', compact('user'));
+    }
 }
