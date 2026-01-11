@@ -33,15 +33,91 @@
         ::-webkit-scrollbar-thumb:hover { background: #555; }
         [x-cloak] { display: none !important; }
         
-        /* Markdown Styles */
-        .markdown-body pre { background: #1E1E1E; padding: 1rem; border-radius: 0.5rem; border: 1px solid #333; overflow-x: auto; margin-bottom: 1rem; }
-        .markdown-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
-        .markdown-body :not(pre) > code { background: #2A2A2A; color: #00D4FF; padding: 0.1rem 0.3rem; border-radius: 0.25rem; border: 1px solid #333; }
-        .markdown-body p { margin-bottom: 1rem; line-height: 1.6; }
-        .markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
-        .markdown-body ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
+        /* Code Block Styles */
+        .markdown-body pre { 
+            background: #111111 !important; 
+            padding: 0 !important; 
+            border-radius: 10px; 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            overflow: hidden; 
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: lowercase;
+        }
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .copy-btn:hover { color: #fff; }
+        .markdown-body pre code { 
+            display: block;
+            padding: 1.25rem !important; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.9rem; 
+            line-height: 1.6;
+            background: transparent !important;
+            border: none !important;
+        }
+        .markdown-body :not(pre) > code { background: rgba(0, 212, 255, 0.1); color: #00D4FF; padding: 0.2rem 0.4rem; border-radius: 6px; border: 1px solid rgba(0, 212, 255, 0.2); font-size: 0.85em; }
         .markdown-body strong { color: #fff; font-weight: 600; }
         .markdown-body blockquote { border-left: 4px solid #333; padding-left: 1rem; color: #888; margin-bottom: 1rem; }
+        
+        /* Table Styles Premium */
+        .markdown-body table { 
+            width: 100%; 
+            border-collapse: separate; 
+            border-spacing: 0; 
+            margin: 1.5rem 0; 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            background: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(4px);
+        }
+        .markdown-body th { 
+            background: rgba(255, 255, 255, 0.04); 
+            padding: 12px 16px; 
+            text-align: left; 
+            font-weight: 700; 
+            color: #fff; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+        }
+        .markdown-body td { 
+            padding: 14px 16px; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04); 
+            color: #D1D5DB; 
+            font-size: 0.95rem; 
+            line-height: 1.6;
+            vertical-align: top;
+            transition: all 0.2s ease;
+        }
+        .markdown-body tr:last-child td { border-bottom: none; }
+        .markdown-body tr:nth-child(even) { background: rgba(255, 255, 255, 0.01); }
+        .markdown-body tr:hover td { 
+            background: rgba(255, 255, 255, 0.03); 
+            color: #fff; 
+        }
+        .markdown-body thead { background: rgba(255, 255, 255, 0.03); }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col" x-data="{ toasts: [] }" @notify.window="toasts.push({message: $event.detail.message, type: $event.detail.type || 'info', id: Date.now()}); setTimeout(() => { toasts.shift() }, 3000)">

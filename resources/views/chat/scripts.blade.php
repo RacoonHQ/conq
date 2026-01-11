@@ -63,7 +63,35 @@
                     if (!container) return;
                     
                     if (window.hljs) {
-                        container.querySelectorAll('pre code').forEach(block => window.hljs.highlightElement(block));
+                        container.querySelectorAll('pre code').forEach(block => {
+                            // Highlight element
+                            window.hljs.highlightElement(block);
+                            
+                            // Check if header already exists
+                            const pre = block.parentElement;
+                            if (pre && !pre.querySelector('.code-header')) {
+                                const language = block.className.replace('language-', '') || 'code';
+                                const header = document.createElement('div');
+                                header.className = 'code-header';
+                                header.innerHTML = `
+                                    <span>${language}</span>
+                                    <div class="copy-btn">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                        <span>Copy</span>
+                                    </div>
+                                `;
+                                
+                                pre.insertBefore(header, block);
+                                
+                                // Add Copy Logic
+                                header.querySelector('.copy-btn').onclick = () => {
+                                    navigator.clipboard.writeText(block.innerText);
+                                    const span = header.querySelector('.copy-btn span');
+                                    span.innerText = 'Copied!';
+                                    setTimeout(() => span.innerText = 'Copy', 2000);
+                                };
+                            }
+                        });
                     }
                     if (window.renderMathInElement) {
                         window.renderMathInElement(container, {

@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth; // Import facade Authentication dari Larave
 class ChatController extends Controller // Definisikan ChatController yang extends Controller dasar
 {
     const AGENTS = [ // Definisikan array konstan dari agent AI yang tersedia
-        'thinking_ai' => ['name' => 'Thinking AI', 'model' => 'qwen/qwen3-32b', 'role' => 'system', 'instruction' => 'You are Thinking AI, a creative partner for brainstorming.'], // Konfigurasi agent Thinking AI
-        'code_ai' => ['name' => 'Code AI', 'model' => 'moonshotai/kimi-k2-instruct-0905', 'role' => 'system', 'instruction' => 'You are Code AI. Provide clean, efficient code. Wrap code in markdown blocks.'], // Konfigurasi agent Code AI
-        'reasoning_ai' => ['name' => 'Reasoning AI', 'model' => 'meta-llama/llama-4-scout-17b-16e-instruct', 'role' => 'system', 'instruction' => 'You are Reasoning AI. Approach problems step-by-step.'], // Konfigurasi agent Reasoning AI
-        'math_ai' => ['name' => 'Math AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Math AI. Use LaTeX for equations.'], // Konfigurasi agent Math AI
+        'thinking_ai' => ['name' => 'Thinking AI', 'model' => 'qwen/qwen3-32b', 'role' => 'system', 'instruction' => 'You are Thinking AI, a creative partner for brainstorming. Always use Markdown for formatting. For structured data, ALWAYS use Markdown tables. Below complex tables, provide a relevant code block (e.g., Python, C++, or Bash) if it helps explain the data or provides a practical example/template.'], // Konfigurasi agent Thinking AI
+        'code_ai' => ['name' => 'Code AI', 'model' => 'moonshotai/kimi-k2-instruct-0905', 'role' => 'system', 'instruction' => 'You are Code AI. Provide clean, efficient code. Wrap code in markdown blocks with language headers. After presenting comparisons or technical specs in tables, provide a full code implementation or usage example in a code block below.'], // Konfigurasi agent Code AI
+        'reasoning_ai' => ['name' => 'Reasoning AI', 'model' => 'meta-llama/llama-4-scout-17b-16e-instruct', 'role' => 'system', 'instruction' => 'You are Reasoning AI. Approach problems step-by-step. Use Markdown tables for data. Below tables, provide technical snippets, configuration examples, or pseudo-code to illustrate the reasoning.'], // Konfigurasi agent Reasoning AI
+        'math_ai' => ['name' => 'Math AI', 'model' => 'openai/gpt-oss-120b', 'role' => 'system', 'instruction' => 'You are Math AI. Use LaTeX for equations. Use Markdown tables for results. Below tables, provide code snippets (e.g., Python/MATLAB) to perform the calculations or simulations shown.'], // Konfigurasi agent Math AI
     ];
 
     protected GroqService $groqService; // Deklarasikan properti untuk menyimpan instance GroqService
